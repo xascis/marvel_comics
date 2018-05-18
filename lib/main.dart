@@ -9,7 +9,8 @@ class MyApp extends StatelessWidget {
     return new MaterialApp(
       title: 'Flutter Demo',
       theme: new ThemeData(
-          primarySwatch: Colors.red, primaryColorDark: Colors.red[800]),
+          primarySwatch: Colors.red,
+          primaryColorDark: Colors.red[800]),
       home: new MyHomePage(title: 'Marvel'),
     );
   }
@@ -52,6 +53,16 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
     );
 
+    Widget listViewSuperHeroes = new Expanded(
+        child: new ListView.builder(
+            padding: new EdgeInsets.all(5.0),
+            itemExtent: 20.0,
+            itemBuilder: (BuildContext context, int index) {
+              return new Text('entry $index');
+            }
+        )
+    );
+
     return new Scaffold(
       appBar: new AppBar(
         title: new Text(widget.title),
@@ -67,6 +78,7 @@ class _MyHomePageState extends State<MyHomePage> {
         children: <Widget>[
           titleSection,
           textFieldSuperHero,
+          listViewSuperHeroes,
         ],
       ),
       // This trailing comma makes auto-formatting nicer for build methods.
@@ -77,18 +89,18 @@ class _MyHomePageState extends State<MyHomePage> {
     await showDialog(
         context: context,
         builder: (BuildContext context) {
-      return new SimpleDialog(
-        title: const Text('Aplicación creada con Flutter'),
-        children: <Widget>[
-          new SimpleDialogOption(
-            child: const Text('Ok'),
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-          )
-        ],
-      );
-    });
+          return new SimpleDialog(
+            title: const Text('Aplicación creada con Flutter'),
+            children: <Widget>[
+              new SimpleDialogOption(
+                child: const Text('Ok'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              )
+            ],
+          );
+        });
   }
 
   textFieldChanged() {}
