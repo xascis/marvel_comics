@@ -9,8 +9,7 @@ class MyApp extends StatelessWidget {
     return new MaterialApp(
       title: 'Flutter Demo',
       theme: new ThemeData(
-          primarySwatch: Colors.red,
-          primaryColorDark: Colors.red[800]),
+          primarySwatch: Colors.red, primaryColorDark: Colors.red[800]),
       home: new MyHomePage(title: 'Marvel'),
     );
   }
@@ -43,24 +42,67 @@ class _MyHomePageState extends State<MyHomePage> {
 
     Widget textFieldSuperHero = new Center(
       child: new Container(
-        margin: const EdgeInsets.only(left: 10.0, right: 10.0),
+        margin: const EdgeInsets.only(left: 10.0, right: 10.0, bottom: 10.0),
         child: new TextField(
           textAlign: TextAlign.center,
           onChanged: textFieldChanged(),
           style: new TextStyle(fontSize: 22.0, color: Colors.black),
-          decoration: new InputDecoration(hintText: 'Busca tu Súper-Héroe'),
+//          decoration: new InputDecoration(hintText: 'Busca tu Súper-Héroe'),
         ),
       ),
     );
 
     Widget listViewSuperHeroes = new Expanded(
         child: new ListView.builder(
-            padding: new EdgeInsets.all(5.0),
-            itemExtent: 20.0,
+            padding: new EdgeInsets.all(10.0),
             itemBuilder: (BuildContext context, int index) {
-              return new Text('entry $index');
-            }
+              return new ListTile(
+                title: new Text(
+                  'Esta es la entrada $index',
+                  style: new TextStyle(
+                    fontSize: 20.0,
+                  ),
+                ),
+              );
+//              return new Text('entry $index');
+            }));
+
+    Widget addItemListView(int index) {
+      return new ListTile(
+        title: new Text(
+          'Esta es la entrada $index',
+          style: new TextStyle(
+            fontSize: 20.0,
+          ),
+        ),
+      );
+    }
+
+    Widget itemListView = new Row(
+      children: <Widget>[
+        new Column(
+          children: <Widget>[
+            new Container(
+              width: 100.0,
+              height: 100.0,
+            )
+          ],
+        ),
+        new Column(
+          children: <Widget>[
+            new Text(
+              'Nombre del súper héroe',
+              style: new TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0),
+            ),
+            new Text(
+              'Esta será la descripción del super heroe donde indicará todo lo realacionado con el mismo.',
+              style: new TextStyle(
+                fontSize: 15.0,
+              ),
+            )
+          ],
         )
+      ],
     );
 
     return new Scaffold(
@@ -79,6 +121,13 @@ class _MyHomePageState extends State<MyHomePage> {
           titleSection,
           textFieldSuperHero,
           listViewSuperHeroes,
+          new Container(
+            margin: const EdgeInsets.all(10.0),
+            child: new Text(
+              'Data provided by Marvel. © 2014 Marvel',
+              style: new TextStyle(fontSize: 10.0, fontStyle: FontStyle.italic),
+            ),
+          )
         ],
       ),
       // This trailing comma makes auto-formatting nicer for build methods.
