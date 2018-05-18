@@ -69,6 +69,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     fontSize: 20.0,
                   ),
                 ),
+                trailing: const Icon(Icons.favorite),
                 subtitle: new Text(
                   'Esta es la descripción del super heroe de Marvel desde la página web de la la API.',
                   style: new TextStyle(fontSize: 15.0),
