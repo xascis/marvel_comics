@@ -28,6 +28,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     Widget titleSection = new Center(
       child: new Container(
+        margin: const EdgeInsets.only(top: 10.0),
         padding: const EdgeInsets.all(5.0),
         child: new Text(
           'Busca tu Súper-Héroe',
@@ -41,15 +42,12 @@ class _MyHomePageState extends State<MyHomePage> {
 
     Widget textFieldSuperHero = new Center(
       child: new Container(
-        margin: const EdgeInsets.all(5.0),
-        padding: const EdgeInsets.all(10.0),
+        margin: const EdgeInsets.only(left: 10.0, right: 10.0),
         child: new TextField(
-          textAlign: TextAlign.start,
+          textAlign: TextAlign.center,
           onChanged: textFieldChanged(),
           style: new TextStyle(fontSize: 22.0, color: Colors.black),
-          decoration: new InputDecoration(
-            hintText: 'Busca tu Súper-Héroe'
-          ),
+          decoration: new InputDecoration(hintText: 'Busca tu Súper-Héroe'),
         ),
       ),
     );
@@ -57,6 +55,12 @@ class _MyHomePageState extends State<MyHomePage> {
     return new Scaffold(
       appBar: new AppBar(
         title: new Text(widget.title),
+        actions: <Widget>[
+          new IconButton(
+            icon: const Icon(Icons.chat),
+            onPressed: _pushAboutDialog,
+          ),
+        ],
       ),
       body: new Column(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -69,5 +73,23 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  textFieldChanged(){}
+  void _pushAboutDialog() async {
+    await showDialog(
+        context: context,
+        builder: (BuildContext context) {
+      return new SimpleDialog(
+        title: const Text('Aplicación creada con Flutter'),
+        children: <Widget>[
+          new SimpleDialogOption(
+            child: const Text('Ok'),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          )
+        ],
+      );
+    });
+  }
+
+  textFieldChanged() {}
 }
