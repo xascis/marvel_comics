@@ -57,6 +57,9 @@ class _MyHomePageState extends State<MyHomePage> {
             padding: new EdgeInsets.all(10.0),
             itemBuilder: (BuildContext context, int index) {
               return new ListTile(
+                onTap: null,
+                leading: new Image.network(
+                    'http://i.annihil.us/u/prod/marvel/i/mg/c/e0/535fecbbb9784.jpg'),
                 title: new Text(
                   'Esta es la entrada $index',
                   style: new TextStyle(
@@ -64,7 +67,6 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                 ),
               );
-//              return new Text('entry $index');
             }));
 
     Widget addItemListView(int index) {
