@@ -59,7 +59,9 @@ class _MyHomePageState extends State<MyHomePage> {
               return new ListTile(
                 onTap: null,
                 leading: new Image.network(
-                    'http://i.annihil.us/u/prod/marvel/i/mg/c/e0/535fecbbb9784.jpg'),
+                    'http://i.annihil.us/u/prod/marvel/i/mg/c/e0/535fecbbb9784.jpg',
+                    width: 80.0,
+                    height: 80.0),
                 title: new Text(
                   'Esta es la entrada $index',
                   style: new TextStyle(
@@ -67,7 +69,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                 ),
                 subtitle: new Text(
-                  'Esta es la descripción del super heroe de Marvel descargada desde la página web de la la API.',
+                  'Esta es la descripción del super heroe de Marvel desde la página web de la la API.',
                   style: new TextStyle(fontSize: 15.0),
                 ),
               );
