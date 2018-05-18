@@ -26,6 +26,6 @@ Future<List<Character>> GetData() async{
     return characters;
 
   } catch (Exception){
-    print('Error en la conexión');
+    print("Error");
   }
 }

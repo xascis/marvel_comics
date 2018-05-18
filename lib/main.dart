@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'main_controller.dart';
+import 'package:marvel_comics/character_model.dart';
+import 'package:marvel_comics/main_controller.dart';
 
 void main() => runApp(new MyApp());
 
@@ -53,6 +54,17 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
     );
 
+    Widget listViewTest = new FutureBuilder<List<Character>>(
+      future: GetData(),
+      builder: (context, snapshot){
+        if (snapshot.hasData) {
+          return new Text({$snapshot[0].name} + ' está aquí.');
+        } else if (snapshot.hasError) {
+          return new Text("Error en la concexión.");
+        }
+        return new CircularProgressIndicator();
+      }
+    );
     Widget listViewSuperHeroes = new Expanded(
         child: new ListView.builder(
             padding: new EdgeInsets.all(5.0),
@@ -139,7 +151,7 @@ class _MyHomePageState extends State<MyHomePage> {
           titleSection,
           textFieldSuperHero,
           buttonGetData,
-          listViewSuperHeroes,
+          listViewTest,
           new Container(
             margin: const EdgeInsets.all(10.0),
             child: new Text(
