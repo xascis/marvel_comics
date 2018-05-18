@@ -54,17 +54,55 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
     );
 
-    Widget listViewTest = new FutureBuilder<List<Character>>(
-      future: GetData(),
-      builder: (context, snapshot){
-        if (snapshot.hasData) {
-          return new Text({$snapshot[0].name} + ' está aquí.');
-        } else if (snapshot.hasError) {
-          return new Text("Error en la concexión.");
-        }
-        return new CircularProgressIndicator();
-      }
-    );
+    Widget createListView(BuildContext context, AsyncSnapshot snapshot) {
+      List<Character> characters = snapshot.data;
+      return new ListView.builder(
+          itemCount: characters.length,
+          itemBuilder: (BuildContext context, int index) {
+            return new Column(
+              children: <Widget>[
+                new ListTile(
+                  onTap: null,
+                  leading: new Image.network(
+                    characters[index].thumbnail,
+                  ),
+                  title: new Text(
+                    characters[index].name,
+                    style: new TextStyle(
+                      fontSize: 20.0,
+                    ),
+                  ),
+                  trailing: const Icon(Icons.favorite),
+                  subtitle: new Text(
+                    characters[index].description,
+                    style: new TextStyle(fontSize: 15.0),
+                  ),
+                ),
+                new Divider(
+                  height: 2.0,
+                ),
+              ],
+            );
+          });
+    }
+
+    var listViewTest = new FutureBuilder(
+        future: getData(),
+        builder: (BuildContext context, AsyncSnapshot snapshot) {
+          switch (snapshot.connectionState) {
+            case ConnectionState.none:
+              return new Text('');
+            case ConnectionState.waiting:
+              return new CircularProgressIndicator();
+            default:
+              if (snapshot.hasError) {
+                return new Text('Error en la conexión.');
+              } else {
+                return createListView(context, snapshot);
+              }
+          }
+        });
+
     Widget listViewSuperHeroes = new Expanded(
         child: new ListView.builder(
             padding: new EdgeInsets.all(5.0),
@@ -90,7 +128,7 @@ class _MyHomePageState extends State<MyHomePage> {
             }));
 
     Widget buttonGetData = new RaisedButton(
-      onPressed: GetData,
+      onPressed: getData,
       child: new Text(
         'Buscar',
         style: new TextStyle(fontWeight: FontWeight.bold),
