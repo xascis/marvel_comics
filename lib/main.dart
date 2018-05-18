@@ -54,7 +54,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
     Widget listViewSuperHeroes = new Expanded(
         child: new ListView.builder(
-            padding: new EdgeInsets.all(10.0),
+            padding: new EdgeInsets.all(5.0),
             itemBuilder: (BuildContext context, int index) {
               return new ListTile(
                 onTap: null,
@@ -65,6 +65,10 @@ class _MyHomePageState extends State<MyHomePage> {
                   style: new TextStyle(
                     fontSize: 20.0,
                   ),
+                ),
+                subtitle: new Text(
+                  'Esta es la descripción del super heroe de Marvel descargada desde la página web de la la API.',
+                  style: new TextStyle(fontSize: 15.0),
                 ),
               );
             }));
