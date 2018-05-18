@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'main_controller.dart';
 
 void main() => runApp(new MyApp());
 
@@ -33,7 +34,7 @@ class _MyHomePageState extends State<MyHomePage> {
         child: new Text(
           'Busca tu Súper-Héroe',
           style: new TextStyle(
-            fontSize: 23.0,
+            fontSize: 20.0,
             fontWeight: FontWeight.bold,
           ),
         ),
@@ -74,6 +75,14 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
               );
             }));
+
+    Widget buttonGetData = new RaisedButton(
+      onPressed: GetData,
+      child: new Text(
+        'Buscar',
+        style: new TextStyle(fontWeight: FontWeight.bold),
+      ),
+    );
 
     Widget addItemListView(int index) {
       return new ListTile(
@@ -128,6 +137,7 @@ class _MyHomePageState extends State<MyHomePage> {
         children: <Widget>[
           titleSection,
           textFieldSuperHero,
+          buttonGetData,
           listViewSuperHeroes,
           new Container(
             margin: const EdgeInsets.all(10.0),
