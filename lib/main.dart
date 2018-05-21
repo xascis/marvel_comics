@@ -30,6 +30,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   List<Character> characters = new List<Character>();
   String textFieldName;
+  MainController mainController = new MainController();
 
   @override
   Widget build(BuildContext context) {
@@ -57,21 +58,26 @@ class _MyHomePageState extends State<MyHomePage> {
 //      ),
 //    );
 
+
+    // declaro fuera porque dentro hace búsquedas
+    String oldText;
+
     Future checkTextField(String text) async {
-      String oldText = text;
+      oldText = text;
       await new Future.delayed(new Duration(seconds: 2));
+
       if (text.length >= 3 && oldText == text) {
-        characters = await getData(text);
+        characters = await mainController.getData(text);
 
         // sin conexión
         if (characters == null) {
-          print('characters is null');
-          key.currentState.showSnackBar(new SnackBar(
-            content: new Text('Error en la conexión.'),
-//              action: new SnackBarAction(
-//                  label: 'Ok',
-//                  onPressed: () => key.currentState.hideCurrentSnackBar()),
-          ));
+          print(mainController.textError);
+//          key.currentState.showSnackBar(new SnackBar(
+//            content: new Text('Error en la conexión.'),
+////              action: new SnackBarAction(
+////                  label: 'Ok',
+////                  onPressed: () => key.currentState.hideCurrentSnackBar()),
+//          ));
         }
 
         setState(() {
@@ -148,7 +154,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       ),
                       maxLines: 1,
                     ),
-                    trailing: const Icon(Icons.favorite),
+//                    trailing: const Icon(Icons.favorite),
                     subtitle: new Text(
                       characters[index].description,
                       style: new TextStyle(fontSize: 15.0),
