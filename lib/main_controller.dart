@@ -22,7 +22,8 @@ Future<List<Character>> getData() async{
       characters.add(character);
     };
 
-//    print(characters[0].thumbnail);
+    print(characters[0].thumbnail);
+
     return characters;
 
   } catch (Exception){

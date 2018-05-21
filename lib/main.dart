@@ -56,39 +56,39 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
     );
 
-    Widget createListView(BuildContext context, AsyncSnapshot snapshot) {
-      List<Character> characters = snapshot.data;
-      return new Expanded(
-        child: new ListView.builder(
-            itemCount: characters.length,
-            itemBuilder: (BuildContext context, int index) {
-              return new Column(
-                children: <Widget>[
-                  new ListTile(
-                    onTap: null,
-                    leading: new Image.network(
-                      characters[index].thumbnail,
-                    ),
-                    title: new Text(
-                      characters[index].name,
-                      style: new TextStyle(
-                        fontSize: 20.0,
-                      ),
-                    ),
-                    trailing: const Icon(Icons.favorite),
-                    subtitle: new Text(
-                      characters[index].description,
-                      style: new TextStyle(fontSize: 15.0),
-                    ),
-                  ),
-                  new Divider(
-                    height: 2.0,
-                  ),
-                ],
-              );
-            }),
-      );
-    }
+//    Widget createListView(BuildContext context, AsyncSnapshot snapshot) {
+//      List<Character> characters = snapshot.data;
+//      return new Expanded(
+//        child: new ListView.builder(
+//            itemCount: characters.length,
+//            itemBuilder: (BuildContext context, int index) {
+//              return new Column(
+//                children: <Widget>[
+//                  new ListTile(
+//                    onTap: null,
+//                    leading: new Image.network(
+//                      characters[index].thumbnail,
+//                    ),
+//                    title: new Text(
+//                      characters[index].name,
+//                      style: new TextStyle(
+//                        fontSize: 20.0,
+//                      ),
+//                    ),
+//                    trailing: const Icon(Icons.favorite),
+//                    subtitle: new Text(
+//                      characters[index].description,
+//                      style: new TextStyle(fontSize: 15.0),
+//                    ),
+//                  ),
+//                  new Divider(
+//                    height: 2.0,
+//                  ),
+//                ],
+//              );
+//            }),
+//      );
+//    }
 
     var listViewCharacter = new Expanded(
       child: new ListView.builder(
@@ -121,22 +121,22 @@ class _MyHomePageState extends State<MyHomePage> {
           }),
     );
 
-    var listViewTest = new FutureBuilder(
+//    var listViewTest = new FutureBuilder(
 //        future: getData(),
-        builder: (BuildContext context, AsyncSnapshot snapshot) {
-      switch (snapshot.connectionState) {
-        case ConnectionState.none:
-          return new Text('');
-        case ConnectionState.waiting:
-          return new CircularProgressIndicator();
-        default:
-          if (snapshot.hasError) {
-            return new Text('Error en la conexión.');
-          } else {
-            return createListView(context, snapshot);
-          }
-      }
-    });
+//        builder: (BuildContext context, AsyncSnapshot snapshot) {
+//      switch (snapshot.connectionState) {
+//        case ConnectionState.none:
+//          return new Text('');
+//        case ConnectionState.waiting:
+//          return new CircularProgressIndicator();
+//        default:
+//          if (snapshot.hasError) {
+//            return new Text('Error en la conexión.');
+//          } else {
+//            return createListView(context, snapshot);
+//          }
+//      }
+//    });
 
 //    Widget listViewSuperHeroes = new Expanded(
 //        child: new ListView.builder(
