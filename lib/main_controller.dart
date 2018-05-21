@@ -7,7 +7,7 @@ import 'package:http/http.dart' as http;
 
 Future<List<Character>> getData() async{
   try {
-    var response =  await http.get('https://gateway.marvel.com/v1/public/characters?apikey=2c8c7e04677efe9a1a8625342ae2bac8&ts=10&hash=f8a89c483b2f946c754fc7262c34db1a&orderBy=name' + '&nameStartsWith=gambit');
+    var response =  await http.get('https://gateway.marvel.com/v1/public/characters?apikey=2c8c7e04677efe9a1a8625342ae2bac8&ts=10&hash=f8a89c483b2f946c754fc7262c34db1a&orderBy=name' + '&nameStartsWith=spi');
     final responseJson = jsonDecode(response.body);
 //    print(responseJson['data']['results']);
     var data = responseJson['data']['results'];
@@ -22,7 +22,7 @@ Future<List<Character>> getData() async{
       characters.add(character);
     };
 
-    print(characters[0].thumbnail);
+//    print(characters[0].thumbnail);
     return characters;
 
   } catch (Exception){

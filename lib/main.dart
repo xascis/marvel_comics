@@ -26,6 +26,8 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  List<Character> characters = new List<Character>();
+
   @override
   Widget build(BuildContext context) {
     Widget titleSection = new Center(
@@ -86,49 +88,79 @@ class _MyHomePageState extends State<MyHomePage> {
               );
             }),
       );
-
     }
 
-    var listViewTest = new FutureBuilder(
-        future: getData(),
-        builder: (BuildContext context, AsyncSnapshot snapshot) {
-          switch (snapshot.connectionState) {
-            case ConnectionState.none:
-              return new Text('');
-            case ConnectionState.waiting:
-              return new CircularProgressIndicator();
-            default:
-              if (snapshot.hasError) {
-                return new Text('Error en la conexión.');
-              } else {
-                return createListView(context, snapshot);
-              }
-          }
-        });
-
-    Widget listViewSuperHeroes = new Expanded(
-        child: new ListView.builder(
-            padding: new EdgeInsets.all(5.0),
-            itemBuilder: (BuildContext context, int index) {
-              return new ListTile(
-                onTap: null,
-                leading: new Image.network(
-                    'http://i.annihil.us/u/prod/marvel/i/mg/c/e0/535fecbbb9784.jpg',
-                    width: 80.0,
-                    height: 80.0),
-                title: new Text(
-                  'Esta es la entrada $index',
-                  style: new TextStyle(
-                    fontSize: 20.0,
+    var listViewCharacter = new Expanded(
+      child: new ListView.builder(
+          itemCount: characters.length,
+          itemBuilder: (BuildContext context, int index) {
+            return new Column(
+              children: <Widget>[
+                new ListTile(
+                  onTap: null,
+                  leading: new Image.network(
+                    characters[index].thumbnail,
+                  ),
+                  title: new Text(
+                    characters[index].name,
+                    style: new TextStyle(
+                      fontSize: 20.0,
+                    ),
+                  ),
+                  trailing: const Icon(Icons.favorite),
+                  subtitle: new Text(
+                    characters[index].description,
+                    style: new TextStyle(fontSize: 15.0),
                   ),
                 ),
-                trailing: const Icon(Icons.favorite),
-                subtitle: new Text(
-                  'Esta es la descripción del super heroe de Marvel desde la página web de la la API.',
-                  style: new TextStyle(fontSize: 15.0),
+                new Divider(
+                  height: 2.0,
                 ),
-              );
-            }));
+              ],
+            );
+          }),
+    );
+
+    var listViewTest = new FutureBuilder(
+//        future: getData(),
+        builder: (BuildContext context, AsyncSnapshot snapshot) {
+      switch (snapshot.connectionState) {
+        case ConnectionState.none:
+          return new Text('');
+        case ConnectionState.waiting:
+          return new CircularProgressIndicator();
+        default:
+          if (snapshot.hasError) {
+            return new Text('Error en la conexión.');
+          } else {
+            return createListView(context, snapshot);
+          }
+      }
+    });
+
+//    Widget listViewSuperHeroes = new Expanded(
+//        child: new ListView.builder(
+//            padding: new EdgeInsets.all(5.0),
+//            itemBuilder: (BuildContext context, int index) {
+//              return new ListTile(
+//                onTap: null,
+//                leading: new Image.network(
+//                    'http://i.annihil.us/u/prod/marvel/i/mg/c/e0/535fecbbb9784.jpg',
+//                    width: 80.0,
+//                    height: 80.0),
+//                title: new Text(
+//                  'Esta es la entrada $index',
+//                  style: new TextStyle(
+//                    fontSize: 20.0,
+//                  ),
+//                ),
+//                trailing: const Icon(Icons.favorite),
+//                subtitle: new Text(
+//                  'Esta es la descripción del super heroe de Marvel desde la página web de la la API.',
+//                  style: new TextStyle(fontSize: 15.0),
+//                ),
+//              );
+//            }));
 
     Widget buttonGetData = new RaisedButton(
       onPressed: getData,
@@ -138,43 +170,43 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
     );
 
-    Widget addItemListView(int index) {
-      return new ListTile(
-        title: new Text(
-          'Esta es la entrada $index',
-          style: new TextStyle(
-            fontSize: 20.0,
-          ),
-        ),
-      );
-    }
+//    Widget addItemListView(int index) {
+//      return new ListTile(
+//        title: new Text(
+//          'Esta es la entrada $index',
+//          style: new TextStyle(
+//            fontSize: 20.0,
+//          ),
+//        ),
+//      );
+//    }
 
-    Widget itemListView = new Row(
-      children: <Widget>[
-        new Column(
-          children: <Widget>[
-            new Container(
-              width: 100.0,
-              height: 100.0,
-            )
-          ],
-        ),
-        new Column(
-          children: <Widget>[
-            new Text(
-              'Nombre del súper héroe',
-              style: new TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0),
-            ),
-            new Text(
-              'Esta será la descripción del super heroe donde indicará todo lo realacionado con el mismo.',
-              style: new TextStyle(
-                fontSize: 15.0,
-              ),
-            )
-          ],
-        )
-      ],
-    );
+//    Widget itemListView = new Row(
+//      children: <Widget>[
+//        new Column(
+//          children: <Widget>[
+//            new Container(
+//              width: 100.0,
+//              height: 100.0,
+//            )
+//          ],
+//        ),
+//        new Column(
+//          children: <Widget>[
+//            new Text(
+//              'Nombre del súper héroe',
+//              style: new TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0),
+//            ),
+//            new Text(
+//              'Esta será la descripción del super heroe donde indicará todo lo realacionado con el mismo.',
+//              style: new TextStyle(
+//                fontSize: 15.0,
+//              ),
+//            )
+//          ],
+//        )
+//      ],
+//    );
 
     return new Scaffold(
       appBar: new AppBar(
@@ -192,7 +224,7 @@ class _MyHomePageState extends State<MyHomePage> {
           titleSection,
           textFieldSuperHero,
           buttonGetData,
-          listViewTest,
+          listViewCharacter,
           new Container(
             margin: const EdgeInsets.all(10.0),
             child: new Text(
