@@ -56,34 +56,37 @@ class _MyHomePageState extends State<MyHomePage> {
 
     Widget createListView(BuildContext context, AsyncSnapshot snapshot) {
       List<Character> characters = snapshot.data;
-      return new ListView.builder(
-          itemCount: characters.length,
-          itemBuilder: (BuildContext context, int index) {
-            return new Column(
-              children: <Widget>[
-                new ListTile(
-                  onTap: null,
-                  leading: new Image.network(
-                    characters[index].thumbnail,
-                  ),
-                  title: new Text(
-                    characters[index].name,
-                    style: new TextStyle(
-                      fontSize: 20.0,
+      return new Expanded(
+        child: new ListView.builder(
+            itemCount: characters.length,
+            itemBuilder: (BuildContext context, int index) {
+              return new Column(
+                children: <Widget>[
+                  new ListTile(
+                    onTap: null,
+                    leading: new Image.network(
+                      characters[index].thumbnail,
+                    ),
+                    title: new Text(
+                      characters[index].name,
+                      style: new TextStyle(
+                        fontSize: 20.0,
+                      ),
+                    ),
+                    trailing: const Icon(Icons.favorite),
+                    subtitle: new Text(
+                      characters[index].description,
+                      style: new TextStyle(fontSize: 15.0),
                     ),
                   ),
-                  trailing: const Icon(Icons.favorite),
-                  subtitle: new Text(
-                    characters[index].description,
-                    style: new TextStyle(fontSize: 15.0),
+                  new Divider(
+                    height: 2.0,
                   ),
-                ),
-                new Divider(
-                  height: 2.0,
-                ),
-              ],
-            );
-          });
+                ],
+              );
+            }),
+      );
+
     }
 
     var listViewTest = new FutureBuilder(
