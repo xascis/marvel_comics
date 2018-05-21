@@ -4,6 +4,8 @@ class Character {
   String description;
   String thumbnail;
 
+
+
 //  final String url;
 
 //  Character({this.id, this.name, this.description});

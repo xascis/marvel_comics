@@ -45,12 +45,20 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
     );
 
+    void checkTextField(String text){
+      if (text.length >= 3){
+        characters.clear();
+      } else {
+        characters.clear();
+      }
+    }
+
     Widget textFieldSuperHero = new Center(
       child: new Container(
         margin: const EdgeInsets.only(left: 10.0, right: 10.0, bottom: 10.0),
         child: new TextField(
           textAlign: TextAlign.center,
-          onChanged: (text) {checkTextField()},
+          onChanged: (text) {print("First text field: $text");},
           style: new TextStyle(fontSize: 22.0, color: Colors.black),
 //          decoration: new InputDecoration(hintText: 'Busca tu Súper-Héroe'),
         ),
@@ -93,7 +101,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
     var listViewCharacter = new Expanded(
       child: new ListView.builder(
-          itemCount: characters.length,
+          itemCount: characters == null ? 0 : characters.length,
           itemBuilder: (BuildContext context, int index) {
             return new Column(
               children: <Widget>[
@@ -163,20 +171,18 @@ class _MyHomePageState extends State<MyHomePage> {
 //              );
 //            }));
 
-    void checkTextField(String text){
-      if (text.length >= 3){
-        character.clear();
-      } else {
-        character.clear();
-      }
-    }
+
 
     void refreshList() async {
-      characters.clear();
-      characters = await getData(textFieldName);
-      setState(() {
-        characters;
-      });
+//      characters.clear();
+      characters = await getData();
+      if (characters == null) {
+
+      } else {
+        setState(() {
+          characters;
+        });
+      }
     }
 
     Widget buttonGetData = new RaisedButton(
