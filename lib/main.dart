@@ -27,6 +27,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   List<Character> characters = new List<Character>();
+  String textFieldName;
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +50,7 @@ class _MyHomePageState extends State<MyHomePage> {
         margin: const EdgeInsets.only(left: 10.0, right: 10.0, bottom: 10.0),
         child: new TextField(
           textAlign: TextAlign.center,
-          onChanged: textFieldChanged(),
+          onChanged: (text) {checkTextField()},
           style: new TextStyle(fontSize: 22.0, color: Colors.black),
 //          decoration: new InputDecoration(hintText: 'Busca tu Súper-Héroe'),
         ),
@@ -162,8 +163,24 @@ class _MyHomePageState extends State<MyHomePage> {
 //              );
 //            }));
 
+    void checkTextField(String text){
+      if (text.length >= 3){
+        character.clear();
+      } else {
+        character.clear();
+      }
+    }
+
+    void refreshList() async {
+      characters.clear();
+      characters = await getData(textFieldName);
+      setState(() {
+        characters;
+      });
+    }
+
     Widget buttonGetData = new RaisedButton(
-      onPressed: getData,
+      onPressed: refreshList,
       child: new Text(
         'Buscar',
         style: new TextStyle(fontWeight: FontWeight.bold),
