@@ -28,13 +28,48 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  List<Character> characters = new List<Character>();
   String textFieldName;
   MainController mainController = new MainController();
+  List<Character> characters;
+  bool itsBusy;
 
   @override
   Widget build(BuildContext context) {
     final key = new GlobalKey<ScaffoldState>(); // para mostrar el toast
+    characters = mainController.characters;
+    itsBusy = mainController.itsBusy;
+
+    // declaro fuera porque dentro hace búsquedas
+    String oldText;
+
+    Future checkTextField(String text) async {
+      oldText = text;
+      await new Future.delayed(new Duration(seconds: 2));
+
+      if (text.length >= 3 && oldText == text) {
+        setState((){
+          itsBusy;
+        });
+
+        await mainController.getData(text);
+
+        setState(() {
+          characters;
+          itsBusy;
+        });
+
+        // sin conexión
+        if (characters == null) {
+          print(mainController.textError);
+//          key.currentState.showSnackBar(new SnackBar(
+//            content: new Text('Error en la conexión.'),
+////              action: new SnackBarAction(
+////                  label: 'Ok',
+////                  onPressed: () => key.currentState.hideCurrentSnackBar()),
+//          ));
+        }
+      }
+    }
 
     Widget titleSection = new Center(
       child: new Container(
@@ -50,42 +85,6 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
     );
 
-//    Widget buttonGetData = new RaisedButton(
-//      onPressed: refreshList,
-//      child: new Text(
-//        'Buscar',
-//        style: new TextStyle(fontWeight: FontWeight.bold),
-//      ),
-//    );
-
-
-    // declaro fuera porque dentro hace búsquedas
-    String oldText;
-
-    Future checkTextField(String text) async {
-      oldText = text;
-      await new Future.delayed(new Duration(seconds: 2));
-
-      if (text.length >= 3 && oldText == text) {
-        characters = await mainController.getData(text);
-
-        // sin conexión
-        if (characters == null) {
-          print(mainController.textError);
-//          key.currentState.showSnackBar(new SnackBar(
-//            content: new Text('Error en la conexión.'),
-////              action: new SnackBarAction(
-////                  label: 'Ok',
-////                  onPressed: () => key.currentState.hideCurrentSnackBar()),
-//          ));
-        }
-
-        setState(() {
-          characters;
-        });
-      }
-    }
-
     Widget textFieldSuperHero = new Center(
       child: new Container(
         margin: const EdgeInsets.only(left: 10.0, right: 10.0, bottom: 10.0),
@@ -100,74 +99,79 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
     );
 
-//    Widget createListView(BuildContext context, AsyncSnapshot snapshot) {
-//      List<Character> characters = snapshot.data;
-//      return new Expanded(
-//        child: new ListView.builder(
-//            itemCount: characters.length,
-//            itemBuilder: (BuildContext context, int index) {
-//              return new Column(
-//                children: <Widget>[
-//                  new ListTile(
-//                    onTap: null,
-//                    leading: new Image.network(
-//                      characters[index].thumbnail,
-//                    ),
-//                    title: new Text(
-//                      characters[index].name,
-//                      style: new TextStyle(
-//                        fontSize: 20.0,
-//                      ),
-//                    ),
-//                    trailing: const Icon(Icons.favorite),
-//                    subtitle: new Text(
-//                      characters[index].description,
-//                      style: new TextStyle(fontSize: 15.0),
-//                    ),
-//                  ),
-//                  new Divider(
-//                    height: 2.0,
-//                  ),
-//                ],
-//              );
-//            }),
-//      );
-//    }
+    // bool visibilityError = ;
+    // bool visibilityList = false;
+    // bool visibilityLoading = false;
 
-    var listViewCharacter = new Expanded(
+    // void _showResults(bool visibility, String field){
+    //   setState((){
+    //     if (field == "error"){
+    //       visibilityError = visibility;
+    //     }
+    //     if (field == "list"){
+    //       visibilityList = visibility;
+    //     }
+    //     if (field == "loading"){
+    //       visibilityLoading = visibility;
+    //     }
+    //   });
+    // }
+
+    Widget loadingIndicator = new Expanded(
+      child : new Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+          new CircularProgressIndicator()
+        ],
+      )
+    );
+
+    Widget labelResults = new Container(
+      child: new Text(
+        'Error',
+        style: new TextStyle(
+          fontSize: 20.0,
+          color: Colors.grey,
+        ),
+      ),
+    );
+
+    Widget listViewCharacter = new Expanded(
       child: new ListView.builder(
-          itemCount: characters == null ? 0 : characters.length,
-          itemBuilder: (BuildContext context, int index) {
-            return new Column(
-              children: <Widget>[
-                new Container(
-                  padding: new EdgeInsets.all(5.0),
-                  child: new ListTile(
-                    onTap: null,
-                    leading: new Image.network(
-                      characters[index].thumbnail,
+        itemCount: characters == null ? 0 : characters.length,
+        itemBuilder: (BuildContext context, int index) {
+          return new Column(
+            children: <Widget>[
+              new Container(
+                padding: new EdgeInsets.all(5.0),
+                child: new ListTile(
+                  onTap: null,
+                  leading: new Image.network(
+                    characters[index].thumbnail,
+                  ),
+                  title: new Text(
+                    characters[index].name,
+                    style: new TextStyle(
+                      fontSize: 20.0,
                     ),
-                    title: new Text(
-                      characters[index].name,
-                      style: new TextStyle(
-                        fontSize: 20.0,
-                      ),
-                      maxLines: 1,
-                    ),
+                    maxLines: 1,
+                  ),
 //                    trailing: const Icon(Icons.favorite),
-                    subtitle: new Text(
-                      characters[index].description,
-                      style: new TextStyle(fontSize: 15.0),
-                      maxLines: 3,
-                    ),
+                  subtitle: new Text(
+                    characters[index].description,
+                    style: new TextStyle(fontSize: 15.0),
+                    maxLines: 3,
                   ),
                 ),
-                new Divider(
-                  height: 2.0,
-                ),
-              ],
-            );
-          }),
+              ),
+              new Divider(
+                height: 2.0,
+              ),
+            ],
+          );
+        }
+      )
     );
 
 //    var listViewTest = new FutureBuilder(
@@ -227,7 +231,7 @@ class _MyHomePageState extends State<MyHomePage> {
         children: <Widget>[
           titleSection,
           textFieldSuperHero,
-          listViewCharacter,
+          !itsBusy ? listViewCharacter : loadingIndicator,
           new Container(
             margin: const EdgeInsets.all(10.0),
             child: new Text(
@@ -237,25 +241,25 @@ class _MyHomePageState extends State<MyHomePage> {
           )
         ],
       ),
-      // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 
   void _pushAboutDialog() async {
     await showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return new SimpleDialog(
-            title: const Text('Aplicación creada con Flutter'),
-            children: <Widget>[
-              new SimpleDialogOption(
-                child: const Text('Ok'),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-              )
-            ],
-          );
-        });
+      context: context,
+      builder: (BuildContext context) {
+        return new SimpleDialog(
+          title: const Text('Aplicación creada con Flutter'),
+          children: <Widget>[
+            new SimpleDialogOption(
+              child: const Text('Ok'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            )
+          ],
+        );
+      }
+    );
   }
 }
