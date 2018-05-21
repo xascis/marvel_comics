@@ -32,12 +32,16 @@ class _MyHomePageState extends State<MyHomePage> {
   MainController mainController = new MainController();
   List<Character> characters;
   bool itsBusy;
+  bool showError;
+  String textError;
 
   @override
   Widget build(BuildContext context) {
-    final key = new GlobalKey<ScaffoldState>(); // para mostrar el toast
+    // final key = new GlobalKey<ScaffoldState>(); // para mostrar el toast
     characters = mainController.characters;
     itsBusy = mainController.itsBusy;
+    showError = mainController.showError;
+    textError = mainController.textError;
 
     // declaro fuera porque dentro hace búsquedas
     String oldText;
@@ -49,6 +53,7 @@ class _MyHomePageState extends State<MyHomePage> {
       if (text.length >= 3 && oldText == text) {
         setState((){
           itsBusy;
+          showError;
         });
 
         await mainController.getData(text);
@@ -56,6 +61,7 @@ class _MyHomePageState extends State<MyHomePage> {
         setState(() {
           characters;
           itsBusy;
+          showError;
         });
 
         // sin conexión
@@ -127,13 +133,21 @@ class _MyHomePageState extends State<MyHomePage> {
       )
     );
 
-    Widget labelResults = new Container(
-      child: new Text(
-        'Error',
-        style: new TextStyle(
-          fontSize: 20.0,
-          color: Colors.grey,
-        ),
+    Widget labelResults = new Expanded(
+      child: new Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+          new Container(
+            child: new Text(
+              '$textError',
+              style: new TextStyle(
+                fontSize: 20.0,
+                color: Colors.grey,
+              ),
+            ),
+          )
+        ],
       ),
     );
 
@@ -216,7 +230,7 @@ class _MyHomePageState extends State<MyHomePage> {
 //            }));
 
     return new Scaffold(
-      key: key,
+      // key: key,
       appBar: new AppBar(
         title: new Text(widget.title),
         actions: <Widget>[
@@ -231,7 +245,9 @@ class _MyHomePageState extends State<MyHomePage> {
         children: <Widget>[
           titleSection,
           textFieldSuperHero,
-          !itsBusy ? listViewCharacter : loadingIndicator,
+          !itsBusy && !showError ? listViewCharacter : new Container(),
+          itsBusy ? loadingIndicator : new Container(),
+          showError ? labelResults : new Container(),
           new Container(
             margin: const EdgeInsets.all(10.0),
             child: new Text(

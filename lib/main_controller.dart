@@ -9,15 +9,20 @@ class MainController {
   List<Character> characters = new List<Character>();
   String textError = '';
   bool _itsbusy = false;
+  bool _showerror = false;
 
   bool get itsBusy => _itsbusy;
   set itsBusy(bool itsbusy) {this._itsbusy = itsbusy;}
 
+  bool get showError => _showerror;
+  set showError(bool showerror) {this._showerror = showerror;}
+
+  // añadir un callback
   getData(String textFieldHeroName) async{
     try {
-      
+      if (itsBusy) return;
       itsBusy = true;
-
+      showError = false;
       characters.clear();
 
       var response =  await http.get('https://gateway.marvel.com/v1/public/characters?apikey=2c8c7e04677efe9a1a8625342ae2bac8&ts=10&hash=f8a89c483b2f946c754fc7262c34db1a&orderBy=name'+ '&limit=50' + '&nameStartsWith=' + textFieldHeroName);
@@ -27,8 +32,11 @@ class MainController {
 
       if (responseJson['data']['count'] == 0){
         textError = 'No se han encontrado resultados';
+        showError = true;
       } else {
         textError = '';
+
+        // utilizar un Map
         for (var item in data){
           Character character = new Character();
           character.name = item['name'];
@@ -38,11 +46,12 @@ class MainController {
 
           characters.add(character);
         }
-        print(characters[0].thumbnail);
       }
     } catch (Exception){
       textError = 'Error en la conexión.';
+      showError = true;
       print('Error en la conexión');
+
     } finally {
       itsBusy = false;
     }
