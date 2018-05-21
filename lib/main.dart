@@ -31,6 +31,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final key = new GlobalKey<ScaffoldState>();
+
     Widget titleSection = new Center(
       child: new Container(
         margin: const EdgeInsets.only(top: 10.0),
@@ -45,8 +47,8 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
     );
 
-    void checkTextField(String text){
-      if (text.length >= 3){
+    void checkTextField(String text) {
+      if (text.length >= 3) {
         characters.clear();
       } else {
         characters.clear();
@@ -58,7 +60,9 @@ class _MyHomePageState extends State<MyHomePage> {
         margin: const EdgeInsets.only(left: 10.0, right: 10.0, bottom: 10.0),
         child: new TextField(
           textAlign: TextAlign.center,
-          onChanged: (text) {print("First text field: $text");},
+          onChanged: (text) {
+            print("First text field: $text");
+          },
           style: new TextStyle(fontSize: 22.0, color: Colors.black),
 //          decoration: new InputDecoration(hintText: 'Busca tu Súper-Héroe'),
         ),
@@ -171,13 +175,17 @@ class _MyHomePageState extends State<MyHomePage> {
 //              );
 //            }));
 
-
-
     void refreshList() async {
 //      characters.clear();
       characters = await getData();
       if (characters == null) {
-
+        print('characters is null');
+        key.currentState.showSnackBar(new SnackBar(
+              content: new Text('Error en la conexión.'),
+//              action: new SnackBarAction(
+//                  label: 'Ok',
+//                  onPressed: () => key.currentState.hideCurrentSnackBar()),
+            ));
       } else {
         setState(() {
           characters;
@@ -232,6 +240,7 @@ class _MyHomePageState extends State<MyHomePage> {
 //    );
 
     return new Scaffold(
+      key: key,
       appBar: new AppBar(
         title: new Text(widget.title),
         actions: <Widget>[

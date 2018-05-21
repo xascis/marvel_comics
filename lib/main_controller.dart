@@ -12,6 +12,8 @@ Future<List<Character>> getData() async{
 //    print(responseJson['data']['results']);
     var data = responseJson['data']['results'];
 
+    // if results == 0 show message
+
     List<Character> characters = new List<Character>();
     for (var item in data){
       Character character = new Character();
