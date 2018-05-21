@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:marvel_comics/character_model.dart';
 import 'package:marvel_comics/main_controller.dart';
@@ -31,7 +33,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    final key = new GlobalKey<ScaffoldState>();
+    final key = new GlobalKey<ScaffoldState>(); // para mostrar el toast
 
     Widget titleSection = new Center(
       child: new Container(
@@ -47,11 +49,34 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
     );
 
-    void checkTextField(String text) {
-      if (text.length >= 3) {
-        characters.clear();
-      } else {
-        characters.clear();
+//    Widget buttonGetData = new RaisedButton(
+//      onPressed: refreshList,
+//      child: new Text(
+//        'Buscar',
+//        style: new TextStyle(fontWeight: FontWeight.bold),
+//      ),
+//    );
+
+    Future checkTextField(String text) async {
+      String oldText = text;
+      await new Future.delayed(new Duration(seconds: 2));
+      if (text.length >= 3 && oldText == text) {
+        characters = await getData(text);
+
+        // sin conexión
+        if (characters == null) {
+          print('characters is null');
+          key.currentState.showSnackBar(new SnackBar(
+            content: new Text('Error en la conexión.'),
+//              action: new SnackBarAction(
+//                  label: 'Ok',
+//                  onPressed: () => key.currentState.hideCurrentSnackBar()),
+          ));
+        }
+
+        setState(() {
+          characters;
+        });
       }
     }
 
@@ -61,7 +86,7 @@ class _MyHomePageState extends State<MyHomePage> {
         child: new TextField(
           textAlign: TextAlign.center,
           onChanged: (text) {
-            print("First text field: $text");
+            checkTextField(text);
           },
           style: new TextStyle(fontSize: 22.0, color: Colors.black),
 //          decoration: new InputDecoration(hintText: 'Busca tu Súper-Héroe'),
@@ -109,21 +134,26 @@ class _MyHomePageState extends State<MyHomePage> {
           itemBuilder: (BuildContext context, int index) {
             return new Column(
               children: <Widget>[
-                new ListTile(
-                  onTap: null,
-                  leading: new Image.network(
-                    characters[index].thumbnail,
-                  ),
-                  title: new Text(
-                    characters[index].name,
-                    style: new TextStyle(
-                      fontSize: 20.0,
+                new Container(
+                  padding: new EdgeInsets.all(5.0),
+                  child: new ListTile(
+                    onTap: null,
+                    leading: new Image.network(
+                      characters[index].thumbnail,
                     ),
-                  ),
-                  trailing: const Icon(Icons.favorite),
-                  subtitle: new Text(
-                    characters[index].description,
-                    style: new TextStyle(fontSize: 15.0),
+                    title: new Text(
+                      characters[index].name,
+                      style: new TextStyle(
+                        fontSize: 20.0,
+                      ),
+                      maxLines: 1,
+                    ),
+                    trailing: const Icon(Icons.favorite),
+                    subtitle: new Text(
+                      characters[index].description,
+                      style: new TextStyle(fontSize: 15.0),
+                      maxLines: 3,
+                    ),
                   ),
                 ),
                 new Divider(
@@ -175,70 +205,6 @@ class _MyHomePageState extends State<MyHomePage> {
 //              );
 //            }));
 
-    void refreshList() async {
-//      characters.clear();
-      characters = await getData();
-      if (characters == null) {
-        print('characters is null');
-        key.currentState.showSnackBar(new SnackBar(
-              content: new Text('Error en la conexión.'),
-//              action: new SnackBarAction(
-//                  label: 'Ok',
-//                  onPressed: () => key.currentState.hideCurrentSnackBar()),
-            ));
-      } else {
-        setState(() {
-          characters;
-        });
-      }
-    }
-
-    Widget buttonGetData = new RaisedButton(
-      onPressed: refreshList,
-      child: new Text(
-        'Buscar',
-        style: new TextStyle(fontWeight: FontWeight.bold),
-      ),
-    );
-
-//    Widget addItemListView(int index) {
-//      return new ListTile(
-//        title: new Text(
-//          'Esta es la entrada $index',
-//          style: new TextStyle(
-//            fontSize: 20.0,
-//          ),
-//        ),
-//      );
-//    }
-
-//    Widget itemListView = new Row(
-//      children: <Widget>[
-//        new Column(
-//          children: <Widget>[
-//            new Container(
-//              width: 100.0,
-//              height: 100.0,
-//            )
-//          ],
-//        ),
-//        new Column(
-//          children: <Widget>[
-//            new Text(
-//              'Nombre del súper héroe',
-//              style: new TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0),
-//            ),
-//            new Text(
-//              'Esta será la descripción del super heroe donde indicará todo lo realacionado con el mismo.',
-//              style: new TextStyle(
-//                fontSize: 15.0,
-//              ),
-//            )
-//          ],
-//        )
-//      ],
-//    );
-
     return new Scaffold(
       key: key,
       appBar: new AppBar(
@@ -255,7 +221,6 @@ class _MyHomePageState extends State<MyHomePage> {
         children: <Widget>[
           titleSection,
           textFieldSuperHero,
-          buttonGetData,
           listViewCharacter,
           new Container(
             margin: const EdgeInsets.all(10.0),
@@ -287,6 +252,4 @@ class _MyHomePageState extends State<MyHomePage> {
           );
         });
   }
-
-  textFieldChanged() {}
 }
