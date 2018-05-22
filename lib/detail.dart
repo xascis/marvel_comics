@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:marvel_comics/character_model.dart';
+import 'dart:async';
+import 'package:url_launcher/url_launcher.dart';
 
 class DetailPage extends StatefulWidget {
   final Character character;
@@ -11,6 +13,8 @@ class DetailPage extends StatefulWidget {
 }
 
 class _DetailPageState extends State<DetailPage> {
+
+
 
   @override
   Widget build(BuildContext context){
@@ -75,11 +79,9 @@ class _DetailPageState extends State<DetailPage> {
       ],
     );
 
-    _launchUrl(String url) async {
+    Future _launchUrl(String url) async {
       if (await canLaunch(url)) {
-        await launch(url);
-      } else {
-        throw 'Could not launch $url';
+        await launch(url, forceWebView: true);
       }
     }
 
@@ -89,21 +91,21 @@ class _DetailPageState extends State<DetailPage> {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: <Widget>[
           new RaisedButton(
-            onPressed: _launchUrl(character.UrlDetail),
+            onPressed: (character.urlDetail != null) ? () {_launchUrl(character.urlDetail);} : null,
             child: new Text(
               'Detalles', 
               style: new TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
             ),
           ),
           new RaisedButton(
-            onPressed: null,
+            onPressed: (character.urlWiki != null) ? () {_launchUrl(character.urlWiki);} : null,
             child: new Text(
               'Wiki', 
               style: new TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
             ),
           ),
           new RaisedButton(
-            onPressed: null,
+            onPressed: (character.urlComics != null) ? () {_launchUrl(character.urlComics);} : null,
             child: new Text(
               'Comics', 
               style: new TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
@@ -124,6 +126,8 @@ class _DetailPageState extends State<DetailPage> {
         )
       ],
     );
+
+    // Widget tabViewComicEvents = 
 
     return new Scaffold(
       appBar: new AppBar(

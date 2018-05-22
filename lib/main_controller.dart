@@ -1,8 +1,6 @@
 import 'character_model.dart';
 
-import 'dart:io';
 import 'dart:convert';
-import 'dart:async';
 import 'package:http/http.dart' as http;
 
 class MainController {
