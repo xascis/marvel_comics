@@ -98,18 +98,16 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
     );
 
-    Widget textFieldSuperHero = new Center(
-      child: new Container(
-        margin: const EdgeInsets.only(left: 10.0, right: 10.0, bottom: 10.0),
-        child: new TextField(
-          focusNode: _focusNode,
-          textAlign: TextAlign.center,
-          onChanged: (text) {
-            checkTextField(text);
-          },
-          style: new TextStyle(fontSize: 22.0, color: Colors.black),
-//          decoration: new InputDecoration(hintText: 'Busca tu Súper-Héroe'),
-        ),
+    Widget textFieldSuperHero =new Container(
+      margin: const EdgeInsets.only(left: 10.0, right: 10.0, bottom: 10.0),
+      child: new TextField(
+        focusNode: _focusNode,
+        textAlign: TextAlign.center,
+        decoration: new InputDecoration(hintText: 'Escribe el nombre'),
+        onChanged: (text) {
+          checkTextField(text);
+        },
+        style: new TextStyle(fontSize: 22.0, color: Colors.black),
       ),
     );
 

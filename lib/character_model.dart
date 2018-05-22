@@ -3,6 +3,9 @@ class Character {
   String name;
   String description;
   String thumbnail;
+  String urlDetail;
+  String urlWiki;
+  String urlComics;
 
 //  final String url;
 
