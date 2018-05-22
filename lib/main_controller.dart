@@ -1,5 +1,4 @@
 import 'character_model.dart';
-
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
@@ -41,6 +40,8 @@ class MainController {
           character.description = item['description'];
           character.id = item['id'];
           character.thumbnail = item['thumbnail']['path'] + '.' + item['thumbnail']['extension'].toString().toLowerCase();
+          character.numberComics = item['comics']['available'];
+          character.numberEvents = item['events']['available'];
 
           for (var url in item['urls']){
             switch (url['type']){

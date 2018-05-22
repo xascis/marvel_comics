@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:marvel_comics/character_model.dart';
+import 'package:marvel_comics/comic_model.dart';
+import 'package:marvel_comics/detail_controller.dart';
 import 'dart:async';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -13,12 +15,50 @@ class DetailPage extends StatefulWidget {
 }
 
 class _DetailPageState extends State<DetailPage> {
+  DetailController detailController = new DetailController();
+  List<Comic> comics;
+  List<Comic> events;
+  bool itsBusyComics;
+  bool itsBusyEvents;
+  bool showErrorComics;
+  bool showErrorEvents;
+  String textErrorComics;
+  String textErrorEvents;
 
 
 
   @override
   Widget build(BuildContext context){
     Character character = widget.character;
+    comics = detailController.comics;
+    events = detailController.events;
+    showErrorComics = detailController.showErrorComics;
+    showErrorEvents = detailController.showErrorEvents;
+    itsBusyComics = detailController.itsBusyComics;
+    itsBusyEvents = detailController.itsBusyEvents;
+    int numberComics = character.numberComics;
+    int numberEvents = character.numberEvents;
+    textErrorComics = detailController.textErrorComics;
+    textErrorEvents = detailController.textErrorEvents;
+
+    void getData() async{
+//      setState((){
+//        itsBusyComics;
+//        showErrorComics;
+//      });
+
+      await detailController.getComics(character);
+//      await detailController.getEvents(character);
+
+//      setState(() {
+//        comics;
+//        itsBusyComics;
+//        showErrorComics;
+//      });
+    }
+
+    getData();
+
 
     Widget imageHero =  new Image.network(
       character.thumbnail,
@@ -127,13 +167,115 @@ class _DetailPageState extends State<DetailPage> {
       ],
     );
 
-    Widget tabBar = new DefaultTabController(
-      length: 2,
-      child: new TabBar(
-        tabs: [
-          new Tab(text: 'Comics',),
-          new Tab(text: 'Eventos')
-        ]
+    Widget loadingIndicator = new Expanded(
+        child : new Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            new CircularProgressIndicator()
+          ],
+        )
+    );
+
+    Expanded labelResults(String textError) {
+      return new Expanded(
+        child: new Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            new Container(
+              child: new Text(
+                '$textError',
+                style: new TextStyle(
+                  fontSize: 20.0,
+                  color: Colors.grey,
+                ),
+              ),
+            )
+          ],
+        ),
+      );
+    }
+
+    Expanded listViewComics(List<Comic> comics) {
+      new Expanded(
+          child: new ListView.builder(
+              itemCount: comics == null ? 0 : comics.length,
+              itemBuilder: (BuildContext context, int index) {
+                return new Column(
+                  children: <Widget>[
+                    new Container(
+                      padding: new EdgeInsets.all(5.0),
+                      child: new ListTile(
+                        onTap: null,
+                        leading: new Image.network(
+                          comics[index].thumbnail,
+                        ),
+                        title: new Text(
+                          comics[index].title,
+                          style: new TextStyle(
+                            fontSize: 20.0,
+                          ),
+                          maxLines: 1,
+                        ),
+//                    trailing: const Icon(Icons.favorite),
+                        subtitle: new Text(
+                          comics[index].description,
+                          style: new TextStyle(fontSize: 15.0),
+                          maxLines: 3,
+                        ),
+                      ),
+                    ),
+                    new Divider(
+                      height: 2.0,
+                    ),
+                  ],
+                );
+              }
+          )
+      );
+    }
+
+    showComics() {
+
+    }
+
+    Widget tabBar = new Expanded(
+      child: new Container(
+        padding: const EdgeInsets.all(5.0),
+        child: new DefaultTabController(
+          length: 2,
+          child: new Column(
+//          crossAxisAlignment: CrossAxisAlignment.start,
+//          mainAxisAlignment: MainAxisAlignment.start,
+            children: <Widget>[
+              new TabBar(
+                  labelColor: Colors.red[900],
+                  labelStyle: new TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
+                  tabs: [
+                    new Tab(text: '($numberComics) Comics'),
+                    new Tab(text: '($numberEvents) Eventos'),
+                  ]
+              ),
+              new Expanded(
+                child: new TabBarView(
+                    children: [
+//                      new Column(
+//                        children: <Widget>[
+//                          listViewComics(comics),
+////                          !itsBusyComics && !showErrorComics ? listViewComics(comics) : new Container(),
+////                          itsBusyComics ? loadingIndicator : new Container(),
+////                          showErrorComics ? labelResults(textErrorComics) : new Container(),
+//                        ],
+//                      ),
+                      listViewComics(comics),
+                      new Text('Los eventos van aquí'),
+                    ]
+                ),
+              ),
+            ],
+          )
+        ),
       )
     );
 
@@ -159,7 +301,6 @@ class _DetailPageState extends State<DetailPage> {
             buttonsHero,
             resourcesHero,
             tabBar,
-            tabBarView,
           ],
         ),
       ),

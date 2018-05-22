@@ -6,6 +6,8 @@ class Character {
   String urlDetail;
   String urlWiki;
   String urlComics;
+  int numberComics;
+  int numberEvents;
 
 //  final String url;
 
