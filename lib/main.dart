@@ -82,12 +82,7 @@ class _MyHomePageState extends State<MyHomePage> {
       }
     }
 
-    showDetailPage (Character character){
-      Navigator.push(
-        context,
-        new MaterialPageRoute(builder: (context) => new DetailPage(character)) 
-      );
-    }
+    
 
     Widget titleSection = new Center(
       child: new Container(
@@ -164,6 +159,13 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
     );
 
+    // showDetailPage (Character character){
+    //   Navigator.push(
+    //     context,
+    //     new MaterialPageRoute(builder: (context) => new DetailPage(character: character)) 
+    //   );
+    // }
+
     Widget listViewCharacter = new Expanded(
       child: new ListView.builder(
         itemCount: characters == null ? 0 : characters.length,
@@ -173,7 +175,14 @@ class _MyHomePageState extends State<MyHomePage> {
               new Container(
                 padding: new EdgeInsets.all(5.0),
                 child: new ListTile(
-                  onTap: showDetailPage(characters[index]),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      new MaterialPageRoute(
+                        builder: (BuildContext context) => new DetailPage(character: characters[index]),
+                      ), 
+                    );
+                  },
                   leading: new Image.network(
                     characters[index].thumbnail,
                   ),
