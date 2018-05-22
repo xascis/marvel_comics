@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:marvel_comics/character_model.dart';
 import 'package:marvel_comics/main_controller.dart';
+import 'package:marvel_comics/detail.dart';
 
 void main() => runApp(new MyApp());
 
@@ -11,7 +12,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Marvel Comic',
       theme: new ThemeData(
           primarySwatch: Colors.red, primaryColorDark: Colors.red[800]),
       home: new MyHomePage(title: 'Marvel'),
@@ -34,6 +35,7 @@ class _MyHomePageState extends State<MyHomePage> {
   bool itsBusy;
   bool showError;
   String textError;
+  final FocusNode _focusNode = new FocusNode();
 
   @override
   Widget build(BuildContext context) {
@@ -48,9 +50,12 @@ class _MyHomePageState extends State<MyHomePage> {
 
     Future checkTextField(String text) async {
       oldText = text;
+      
       await new Future.delayed(new Duration(seconds: 2));
 
       if (text.length >= 3 && oldText == text) {
+        _focusNode.unfocus();
+
         setState((){
           itsBusy;
           showError;
@@ -77,6 +82,13 @@ class _MyHomePageState extends State<MyHomePage> {
       }
     }
 
+    showDetailPage (Character character){
+      Navigator.push(
+        context,
+        new MaterialPageRoute(builder: (context) => new DetailPage(character)) 
+      );
+    }
+
     Widget titleSection = new Center(
       child: new Container(
         margin: const EdgeInsets.only(top: 10.0),
@@ -95,6 +107,7 @@ class _MyHomePageState extends State<MyHomePage> {
       child: new Container(
         margin: const EdgeInsets.only(left: 10.0, right: 10.0, bottom: 10.0),
         child: new TextField(
+          focusNode: _focusNode,
           textAlign: TextAlign.center,
           onChanged: (text) {
             checkTextField(text);
@@ -160,7 +173,7 @@ class _MyHomePageState extends State<MyHomePage> {
               new Container(
                 padding: new EdgeInsets.all(5.0),
                 child: new ListTile(
-                  onTap: null,
+                  onTap: showDetailPage(characters[index]),
                   leading: new Image.network(
                     characters[index].thumbnail,
                   ),
