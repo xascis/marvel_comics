@@ -44,6 +44,20 @@ class MainController {
           character.id = item['id'];
           character.thumbnail = item['thumbnail']['path'] + '.' + item['thumbnail']['extension'].toString().toLowerCase();
 
+          for (var url in item['urls']){
+            switch (url['type']){
+              case 'detail':
+                character.urlDetail = url['url'];
+                break;
+              case 'wiki':
+                character.urlWiki = url['url'];
+                break;
+              case 'comiclink':
+                character.urlComics = url['url'];
+                break;
+            }
+          }
+
           characters.add(character);
         }
       }
