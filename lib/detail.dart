@@ -127,7 +127,22 @@ class _DetailPageState extends State<DetailPage> {
       ],
     );
 
-    // Widget tabViewComicEvents = 
+    Widget tabBar = new DefaultTabController(
+      length: 2,
+      child: new TabBar(
+        tabs: [
+          new Tab(text: 'Comics',),
+          new Tab(text: 'Eventos')
+        ]
+      )
+    );
+
+    Widget tabBarView = new TabBarView(
+      children: [
+        new Text('Comics'),
+        new Text('Eventos')
+      ]
+    );
 
     return new Scaffold(
       appBar: new AppBar(
@@ -143,6 +158,8 @@ class _DetailPageState extends State<DetailPage> {
             linksHero,
             buttonsHero,
             resourcesHero,
+            tabBar,
+            tabBarView,
           ],
         ),
       ),
