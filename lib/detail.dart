@@ -75,13 +75,21 @@ class _DetailPageState extends State<DetailPage> {
       ],
     );
 
+    _launchUrl(String url) async {
+      if (await canLaunch(url)) {
+        await launch(url);
+      } else {
+        throw 'Could not launch $url';
+      }
+    }
+
     Widget buttonsHero = new Container(
       padding: const EdgeInsets.all(5.0),
       child: new Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: <Widget>[
           new RaisedButton(
-            onPressed: null,
+            onPressed: _launchUrl(character.UrlDetail),
             child: new Text(
               'Detalles', 
               style: new TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
