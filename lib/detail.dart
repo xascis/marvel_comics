@@ -41,23 +41,23 @@ class _DetailPageState extends State<DetailPage> {
     textErrorComics = detailController.textErrorComics;
     textErrorEvents = detailController.textErrorEvents;
 
-    void getData() async{
-//      setState((){
-//        itsBusyComics;
-//        showErrorComics;
-//      });
+//     void getData() async{
+// //      setState((){
+// //        itsBusyComics;
+// //        showErrorComics;
+// //      });
 
-      await detailController.getComics(character);
-//      await detailController.getEvents(character);
+//       await detailController.getComics(character);
+// //      await detailController.getEvents(character);
 
-//      setState(() {
-//        comics;
-//        itsBusyComics;
-//        showErrorComics;
-//      });
-    }
+// //      setState(() {
+// //        comics;
+// //        itsBusyComics;
+// //        showErrorComics;
+// //      });
+//     }
 
-    getData();
+//     getData();
 
 
     Widget imageHero =  new Image.network(
@@ -167,78 +167,84 @@ class _DetailPageState extends State<DetailPage> {
       ],
     );
 
-    Widget loadingIndicator = new Expanded(
-        child : new Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            new CircularProgressIndicator()
-          ],
-        )
+    Column loadingIndicator = new Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: <Widget>[
+        new CircularProgressIndicator()
+      ],
     );
 
-    Expanded labelResults(String textError) {
-      return new Expanded(
-        child: new Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            new Container(
-              child: new Text(
-                '$textError',
-                style: new TextStyle(
-                  fontSize: 20.0,
-                  color: Colors.grey,
+    Column labelResults(String textError) {
+      return new Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+          new Container(
+            child: new Text(
+              '$textError',
+              style: new TextStyle(
+                fontSize: 20.0,
+                color: Colors.grey,
+              ),
+            ),
+          )
+        ],
+      );
+    }
+
+    ListView listViewComics(List<Comic> comics) {
+      return new ListView.builder(
+        itemCount: comics == null ? 0 : comics.length,
+        itemBuilder: (BuildContext context, int index) {
+          return new Column(
+            children: <Widget>[
+              new Container(
+                padding: new EdgeInsets.all(5.0),
+                child: new ListTile(
+                  onTap: null,
+                  leading: new Image.network(
+                    comics[index].thumbnail,
+                  ),
+                  title: new Text(
+                    comics[index].title,
+                    style: new TextStyle(
+                      fontSize: 20.0,
+                    ),
+                    maxLines: 1,
+                  ),
+                  subtitle: new Text(
+                    comics[index].description,
+                    style: new TextStyle(fontSize: 15.0),
+                    maxLines: 3,
+                  ),
                 ),
               ),
-            )
-          ],
-        ),
+              new Divider(
+                height: 2.0,
+              ),
+            ],
+          );
+        }
       );
     }
 
-    Expanded listViewComics(List<Comic> comics) {
-      new Expanded(
-          child: new ListView.builder(
-              itemCount: comics == null ? 0 : comics.length,
-              itemBuilder: (BuildContext context, int index) {
-                return new Column(
-                  children: <Widget>[
-                    new Container(
-                      padding: new EdgeInsets.all(5.0),
-                      child: new ListTile(
-                        onTap: null,
-                        leading: new Image.network(
-                          comics[index].thumbnail,
-                        ),
-                        title: new Text(
-                          comics[index].title,
-                          style: new TextStyle(
-                            fontSize: 20.0,
-                          ),
-                          maxLines: 1,
-                        ),
-//                    trailing: const Icon(Icons.favorite),
-                        subtitle: new Text(
-                          comics[index].description,
-                          style: new TextStyle(fontSize: 15.0),
-                          maxLines: 3,
-                        ),
-                      ),
-                    ),
-                    new Divider(
-                      height: 2.0,
-                    ),
-                  ],
-                );
-              }
-          )
-      );
-    }
-
-    showComics() {
-
-    }
+    var tabBarViewComics = new FutureBuilder(
+       future: detailController.getComics(character),
+       builder: (BuildContext context, AsyncSnapshot snapshot) {
+     switch (snapshot.connectionState) {
+       case ConnectionState.none:
+        return labelResults(textErrorComics);
+       case ConnectionState.waiting:
+         return loadingIndicator;
+       default:
+         if (snapshot.hasError) {
+           return labelResults(textErrorComics);
+         } else {
+           return listViewComics(comics);
+         }
+     }
+   });
 
     Widget tabBar = new Expanded(
       child: new Container(
@@ -268,7 +274,7 @@ class _DetailPageState extends State<DetailPage> {
 ////                          showErrorComics ? labelResults(textErrorComics) : new Container(),
 //                        ],
 //                      ),
-                      listViewComics(comics),
+                      tabBarViewComics,
                       new Text('Los eventos van aquí'),
                     ]
                 ),
@@ -279,12 +285,12 @@ class _DetailPageState extends State<DetailPage> {
       )
     );
 
-    Widget tabBarView = new TabBarView(
-      children: [
-        new Text('Comics'),
-        new Text('Eventos')
-      ]
-    );
+    // Widget tabBarView = new TabBarView(
+    //   children: [
+    //     new Text('Comics'),
+    //     new Text('Eventos')
+    //   ]
+    // );
 
     return new Scaffold(
       appBar: new AppBar(

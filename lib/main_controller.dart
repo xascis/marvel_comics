@@ -24,7 +24,6 @@ class MainController {
 
       var response =  await http.get('https://gateway.marvel.com/v1/public/characters?apikey=2c8c7e04677efe9a1a8625342ae2bac8&ts=10&hash=f8a89c483b2f946c754fc7262c34db1a&orderBy=name'+ '&limit=50' + '&nameStartsWith=' + textFieldHeroName);
       final responseJson = jsonDecode(response.body);
-//    print(responseJson['data']['results']);
       var data = responseJson['data']['results'];
 
       if (responseJson['data']['count'] == 0){
@@ -37,7 +36,11 @@ class MainController {
         for (var item in data){
           Character character = new Character();
           character.name = item['name'];
-          character.description = item['description'];
+          if (item['description'] == null) {
+            character.description = '';
+          } else {
+            character.description = item['description'];
+          }
           character.id = item['id'];
           character.thumbnail = item['thumbnail']['path'] + '.' + item['thumbnail']['extension'].toString().toLowerCase();
           character.numberComics = item['comics']['available'];
