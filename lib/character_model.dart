@@ -8,6 +8,7 @@ class Character {
   String urlComics;
   int numberComics;
   int numberEvents;
+  // Map<String, int> numberComicsEvents;
 
 //  final String url;
 

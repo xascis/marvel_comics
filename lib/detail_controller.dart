@@ -31,11 +31,20 @@ class DetailController {
   // set showErrorEvents(bool showerrorevents) {this._showerrorevents = showerrorevents;}
 
   Future<List<Comic>> getComics(Character character, String type) async {
-    if (character.numberComics == 0){
-      // textErrorComics = 'No existen resultados.';
-      // showErrorComics = true;
-      return;
+    switch (type){
+      case 'comics':
+        if (character.numberComics == 0) return;
+        break;
+      default:
+        if (character.numberEvents == 0) return;
+        break;
     }
+    // if (character.numberComics == 0){
+    //   // textErrorComics = 'No existen resultados.';
+    //   // showErrorComics = true;
+    //   return;
+    // }
+
     try {
       // if (itsBusyComics) return;
       // itsBusyComics = true;

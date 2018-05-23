@@ -22,8 +22,8 @@ class _DetailPageState extends State<DetailPage> {
   // bool itsBusyEvents;
   // bool showErrorComics;
   // bool showErrorEvents;
-  String textErrorComics;
-  String textErrorEvents;
+  // String textErrorComics;
+  // String textErrorEvents;
 
 
 

@@ -45,6 +45,8 @@ class MainController {
           character.thumbnail = item['thumbnail']['path'] + '.' + item['thumbnail']['extension'].toString().toLowerCase();
           character.numberComics = item['comics']['available'];
           character.numberEvents = item['events']['available'];
+          // character.numberComicsEvents['comics'] = item['comics']['available'];
+          // character.numberComicsEvents['events'] = item['events']['available'];
 
           for (var url in item['urls']){
             switch (url['type']){
