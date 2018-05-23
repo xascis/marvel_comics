@@ -8,28 +8,6 @@ import 'dart:async';
 
 class DetailController {
   
-  // bool itsBusy;
-  // List<Comic> events = new List<Comic>();
-
-  // String textErrorComics = '';
-  // String textErrorEvents = '';
-  // bool _itsbusycomics = false;
-  // bool _itsbusyevents = false;
-  // bool _showerrorcomics = false;
-  // bool _showerrorevents = false;
-
-  // bool get itsBusyComics => _itsbusycomics;
-  // set itsBusyComics(bool itsbusycomics) {this._itsbusycomics = itsbusycomics;}
-
-  // bool get itsBusyEvents => _itsbusyevents;
-  // set itsBusyEvents(bool itsbusyevents) {this._itsbusyevents = itsbusyevents;}
-
-  // bool get showErrorComics => _showerrorcomics;
-  // set showErrorComics(bool showerrorcomics) {this._showerrorcomics = showerrorcomics;}
-
-  // bool get showErrorEvents => _showerrorevents;
-  // set showErrorEvents(bool showerrorevents) {this._showerrorevents = showerrorevents;}
-
   Future<List<Comic>> getComics(Character character, String type) async {
     switch (type){
       case 'comics':
