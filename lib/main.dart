@@ -70,15 +70,15 @@ class _MyHomePageState extends State<MyHomePage> {
         });
 
         // sin conexión
-        if (characters == null) {
-          print(mainController.textError);
-//          key.currentState.showSnackBar(new SnackBar(
-//            content: new Text('Error en la conexión.'),
-////              action: new SnackBarAction(
-////                  label: 'Ok',
-////                  onPressed: () => key.currentState.hideCurrentSnackBar()),
-//          ));
-        }
+//         if (characters == null) {
+//           print(mainController.textError);
+// //          key.currentState.showSnackBar(new SnackBar(
+// //            content: new Text('Error en la conexión.'),
+// ////              action: new SnackBarAction(
+// ////                  label: 'Ok',
+// ////                  onPressed: () => key.currentState.hideCurrentSnackBar()),
+// //          ));
+//         }
       }
     }
 

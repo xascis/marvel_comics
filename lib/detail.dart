@@ -162,7 +162,7 @@ class _DetailPageState extends State<DetailPage> {
         new Container(
           padding: const EdgeInsets.all(5.0),
           child: new Text(
-            'Resources',
+            'Recursos',
             style: new TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
           ),
         )
@@ -243,7 +243,7 @@ class _DetailPageState extends State<DetailPage> {
                   if (snapshot.hasError) {
                     return labelResults('Error en la conexión');
                   } else if (character.numberComics != 0) {
-                    print(snapshot.data);
+                    // print(snapshot.data);
                     return listViewComics(snapshot.data);
                   } else {
                     return labelResults('No existen resultados');
@@ -253,7 +253,7 @@ class _DetailPageState extends State<DetailPage> {
                   if (snapshot.hasError) {
                     return labelResults('Error en la conexión');
                   } else if (character.numberEvents != 0) {
-                    print(snapshot.data);
+                    // print(snapshot.data);
                     return listViewComics(snapshot.data);
                   } else {
                     return labelResults('No existen resultados');

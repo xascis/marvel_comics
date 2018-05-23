@@ -68,7 +68,7 @@ class MainController {
     } catch (ex){
       textError = 'Error en la conexión.';
       showError = true;
-      print('Error en la conexión');
+      // print('Error en la conexión');
     } finally {
       itsBusy = false;
     }
