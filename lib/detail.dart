@@ -177,7 +177,7 @@ class _DetailPageState extends State<DetailPage> {
 
     Column labelResults(String textError) {
       return new Column(
-        // mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
           new Text(
@@ -228,22 +228,24 @@ class _DetailPageState extends State<DetailPage> {
     }
 
     var tabBarViewComics = new FutureBuilder(
-       future: detailController.getComics(character),
-       builder: (BuildContext context, AsyncSnapshot snapshot) {
-     switch (snapshot.connectionState) {
-       case ConnectionState.none:
-        return labelResults('Error en la conexión');
-       case ConnectionState.waiting:
-         return loadingIndicator;
-       default:
-         if (snapshot.hasError) {
-           print('Error en la conexión');
-           return labelResults('Error en la conexión');
-         } else {
-           return listViewComics(comics);
-         }
-     }
-   });
+      future: detailController.getComics(character),
+      builder: (BuildContext context, AsyncSnapshot snapshot) {
+        switch (snapshot.connectionState) {
+          case ConnectionState.none:
+          case ConnectionState.waiting:
+            return loadingIndicator;
+          default:
+            if (snapshot.hasError) {
+              print('Error en la conexión');
+              return labelResults('Error en la conexión');
+            } else if (character.numberComics != 0) {
+              return listViewComics(comics);
+            } else {
+              return labelResults('No existen resultados');
+            }
+        }
+      }
+    );
 
     Widget tabBar = new Expanded(
       child: new Container(

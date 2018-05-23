@@ -63,11 +63,10 @@ class MainController {
           characters.add(character);
         }
       }
-    } catch (Exception){
+    } catch (ex){
       textError = 'Error en la conexión.';
       showError = true;
       print('Error en la conexión');
-
     } finally {
       itsBusy = false;
     }

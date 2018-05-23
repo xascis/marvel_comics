@@ -68,9 +68,11 @@ class DetailController {
           comics.add(comic);
         }
       }
-    } catch (Exception) {
+    } catch (ex) {
       textErrorComics = 'Error en la conexión.';
       showErrorComics = true;
+      print('error en la conexión');
+      return ex;
     } finally {
       itsBusyComics = false;
     }
