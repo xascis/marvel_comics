@@ -177,18 +177,16 @@ class _DetailPageState extends State<DetailPage> {
 
     Column labelResults(String textError) {
       return new Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+        // mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
-          new Container(
-            child: new Text(
-              '$textError',
-              style: new TextStyle(
-                fontSize: 20.0,
-                color: Colors.grey,
-              ),
+          new Text(
+            '$textError',
+            style: new TextStyle(
+              fontSize: 20.0,
+              color: Colors.grey,
             ),
-          )
+          ),
         ],
       );
     }
@@ -234,12 +232,13 @@ class _DetailPageState extends State<DetailPage> {
        builder: (BuildContext context, AsyncSnapshot snapshot) {
      switch (snapshot.connectionState) {
        case ConnectionState.none:
-        return labelResults(textErrorComics);
+        return labelResults('Error en la conexión');
        case ConnectionState.waiting:
          return loadingIndicator;
        default:
          if (snapshot.hasError) {
-           return labelResults(textErrorComics);
+           print('Error en la conexión');
+           return labelResults('Error en la conexión');
          } else {
            return listViewComics(comics);
          }
@@ -266,14 +265,6 @@ class _DetailPageState extends State<DetailPage> {
               new Expanded(
                 child: new TabBarView(
                     children: [
-//                      new Column(
-//                        children: <Widget>[
-//                          listViewComics(comics),
-////                          !itsBusyComics && !showErrorComics ? listViewComics(comics) : new Container(),
-////                          itsBusyComics ? loadingIndicator : new Container(),
-////                          showErrorComics ? labelResults(textErrorComics) : new Container(),
-//                        ],
-//                      ),
                       tabBarViewComics,
                       new Text('Los eventos van aquí'),
                     ]
