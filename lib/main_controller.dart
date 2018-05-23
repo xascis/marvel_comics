@@ -14,7 +14,6 @@ class MainController {
   bool get showError => _showerror;
   set showError(bool showerror) {this._showerror = showerror;}
 
-  // añadir un callback
   getData(String textFieldHeroName) async{
     try {
       if (itsBusy) return;
@@ -32,7 +31,6 @@ class MainController {
       } else {
         textError = '';
 
-        // utilizar un Map
         for (var item in data){
           Character character = new Character();
           character.name = item['name'];
@@ -45,8 +43,6 @@ class MainController {
           character.thumbnail = item['thumbnail']['path'] + '.' + item['thumbnail']['extension'].toString().toLowerCase();
           character.numberComics = item['comics']['available'];
           character.numberEvents = item['events']['available'];
-          // character.numberComicsEvents['comics'] = item['comics']['available'];
-          // character.numberComicsEvents['events'] = item['events']['available'];
 
           for (var url in item['urls']){
             switch (url['type']){
@@ -61,14 +57,12 @@ class MainController {
                 break;
             }
           }
-
           characters.add(character);
         }
       }
     } catch (ex){
       textError = 'Error en la conexión.';
       showError = true;
-      // print('Error en la conexión');
     } finally {
       itsBusy = false;
     }

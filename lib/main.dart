@@ -8,7 +8,6 @@ import 'package:marvel_comics/detail.dart';
 void main() => runApp(new MyApp());
 
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return new MaterialApp(
@@ -39,13 +38,11 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    // final key = new GlobalKey<ScaffoldState>(); // para mostrar el toast
     characters = mainController.characters;
     itsBusy = mainController.itsBusy;
     showError = mainController.showError;
     textError = mainController.textError;
 
-    // declaro fuera porque dentro hace búsquedas
     String oldText;
 
     Future checkTextField(String text) async {
@@ -68,17 +65,6 @@ class _MyHomePageState extends State<MyHomePage> {
           itsBusy;
           showError;
         });
-
-        // sin conexión
-//         if (characters == null) {
-//           print(mainController.textError);
-// //          key.currentState.showSnackBar(new SnackBar(
-// //            content: new Text('Error en la conexión.'),
-// ////              action: new SnackBarAction(
-// ////                  label: 'Ok',
-// ////                  onPressed: () => key.currentState.hideCurrentSnackBar()),
-// //          ));
-//         }
       }
     }
 
@@ -111,24 +97,6 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
     );
 
-    // bool visibilityError = ;
-    // bool visibilityList = false;
-    // bool visibilityLoading = false;
-
-    // void _showResults(bool visibility, String field){
-    //   setState((){
-    //     if (field == "error"){
-    //       visibilityError = visibility;
-    //     }
-    //     if (field == "list"){
-    //       visibilityList = visibility;
-    //     }
-    //     if (field == "loading"){
-    //       visibilityLoading = visibility;
-    //     }
-    //   });
-    // }
-
     Widget loadingIndicator = new Expanded(
       child : new Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -157,13 +125,6 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
     );
 
-    // showDetailPage (Character character){
-    //   Navigator.push(
-    //     context,
-    //     new MaterialPageRoute(builder: (context) => new DetailPage(character: character)) 
-    //   );
-    // }
-
     Widget listViewCharacter = new Expanded(
       child: new ListView.builder(
         itemCount: characters == null ? 0 : characters.length,
@@ -191,7 +152,6 @@ class _MyHomePageState extends State<MyHomePage> {
                     ),
                     maxLines: 1,
                   ),
-//                    trailing: const Icon(Icons.favorite),
                   subtitle: new Text(
                     characters[index].description,
                     style: new TextStyle(fontSize: 15.0),
@@ -208,49 +168,7 @@ class _MyHomePageState extends State<MyHomePage> {
       )
     );
 
-  //  var listViewTest = new FutureBuilder(
-  //      future: getData(),
-  //      builder: (BuildContext context, AsyncSnapshot snapshot) {
-  //    switch (snapshot.connectionState) {
-  //      case ConnectionState.none:
-  //        return new Text('');
-  //      case ConnectionState.waiting:
-  //        return new CircularProgressIndicator();
-  //      default:
-  //        if (snapshot.hasError) {
-  //          return new Text('Error en la conexión.');
-  //        } else {
-  //          return createListView(context, snapshot);
-  //        }
-  //    }
-  //  });
-
-//    Widget listViewSuperHeroes = new Expanded(
-//        child: new ListView.builder(
-//            padding: new EdgeInsets.all(5.0),
-//            itemBuilder: (BuildContext context, int index) {
-//              return new ListTile(
-//                onTap: null,
-//                leading: new Image.network(
-//                    'http://i.annihil.us/u/prod/marvel/i/mg/c/e0/535fecbbb9784.jpg',
-//                    width: 80.0,
-//                    height: 80.0),
-//                title: new Text(
-//                  'Esta es la entrada $index',
-//                  style: new TextStyle(
-//                    fontSize: 20.0,
-//                  ),
-//                ),
-//                trailing: const Icon(Icons.favorite),
-//                subtitle: new Text(
-//                  'Esta es la descripción del super heroe de Marvel desde la página web de la la API.',
-//                  style: new TextStyle(fontSize: 15.0),
-//                ),
-//              );
-//            }));
-
     return new Scaffold(
-      // key: key,
       appBar: new AppBar(
         title: new Text(widget.title),
         actions: <Widget>[

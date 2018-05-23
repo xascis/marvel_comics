@@ -18,49 +18,12 @@ class DetailPage extends StatefulWidget {
 
 class _DetailPageState extends State<DetailPage> {
   DetailController detailController = new DetailController();
-  // List<Comic> comics;
-  // List<Comic> events;
-  // bool itsBusyComics;
-  // bool itsBusyEvents;
-  // bool showErrorComics;
-  // bool showErrorEvents;
-  // String textErrorComics;
-  // String textErrorEvents;
-
-
 
   @override
   Widget build(BuildContext context){
     Character character = widget.character;
-    // comics = detailController.comics;
-    // events = detailController.events;
-    // showErrorComics = detailController.showErrorComics;
-    // showErrorEvents = detailController.showErrorEvents;
-    // itsBusyComics = detailController.itsBusyComics;
-    // itsBusyEvents = detailController.itsBusyEvents;
     int numberComics = character.numberComics;
     int numberEvents = character.numberEvents;
-    // textErrorComics = detailController.textErrorComics;
-    // textErrorEvents = detailController.textErrorEvents;
-
-//     void getData() async{
-// //      setState((){
-// //        itsBusyComics;
-// //        showErrorComics;
-// //      });
-
-//       await detailController.getComics(character);
-// //      await detailController.getEvents(character);
-
-// //      setState(() {
-// //        comics;
-// //        itsBusyComics;
-// //        showErrorComics;
-// //      });
-//     }
-
-//     getData();
-
 
     Widget imageHero =  new Image.network(
       character.thumbnail,
@@ -265,34 +228,12 @@ class _DetailPageState extends State<DetailPage> {
       );
     }
 
-    // var tabBarViewComics = new FutureBuilder(
-    //   future: detailController.getComics(character, 'comics'),
-    //   builder: (BuildContext context, AsyncSnapshot snapshot) {
-    //     switch (snapshot.connectionState) {
-    //       case ConnectionState.none:
-    //       case ConnectionState.waiting:
-    //         return loadingIndicator;
-    //       default:
-    //         if (snapshot.hasError) {
-    //           return labelResults('Error en la conexión');
-    //         } else if (character.numberComics != 0) {
-    //           print(snapshot.data);
-    //           return listViewComics(snapshot.data);
-    //         } else {
-    //           return labelResults('No existen resultados');
-    //         }
-    //     }
-    //   }
-    // );
-
     Widget tabBar = new Expanded(
       child: new Container(
         padding: const EdgeInsets.all(5.0),
         child: new DefaultTabController(
           length: 2,
           child: new Column(
-//          crossAxisAlignment: CrossAxisAlignment.start,
-//          mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
               new TabBar(
                   labelColor: Colors.red[900],
@@ -316,13 +257,6 @@ class _DetailPageState extends State<DetailPage> {
       )
     );
 
-    // Widget tabBarView = new TabBarView(
-    //   children: [
-    //     new Text('Comics'),
-    //     new Text('Eventos')
-    //   ]
-    // );
-
     return new Scaffold(
       appBar: new AppBar(
         title: new Text(character.name),
@@ -344,24 +278,3 @@ class _DetailPageState extends State<DetailPage> {
     );
   }
 }
-
-// class DetailPage extends StatelessWidget {
-//   final Character character;
-
-//   DetailPage({Key key, this.character}) : super(key: key);
-  
-//   @override
-//   Widget build(BuildContext context){
-//     String characterName = character.name;
-//     return new Scaffold(
-//       appBar: new AppBar(
-//         title: new Text('Hello'),
-//       ),
-//       body: new Column(
-//         children: <Widget>[
-//           new Text('$characterName')
-//         ],
-//       ),
-//     );
-//   }
-// }

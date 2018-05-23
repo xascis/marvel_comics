@@ -17,20 +17,8 @@ class DetailController {
         if (character.numberEvents == 0) return;
         break;
     }
-    // if (character.numberComics == 0){
-    //   // textErrorComics = 'No existen resultados.';
-    //   // showErrorComics = true;
-    //   return;
-    // }
 
     try {
-      // if (itsBusyComics) return;
-      // itsBusyComics = true;
-      // showErrorComics = false;
-
-      // if (itsBusy) return;
-      // itsBusy = true;
-
       List<Comic> comics = new List<Comic>();
       comics.clear();
 
@@ -41,37 +29,23 @@ class DetailController {
       final responseJson = jsonDecode(response.body);
       var data = responseJson['data']['results'];
 
-      // if (responseJson['data']['count'] == 0) {
-      //   textErrorComics = 'No se han encontrado resultados';
-      //   showErrorComics = true;
-      // } else {
-      //   textErrorComics = '';
-
-        // utilizar un Map
-        for (var item in data) {
-          Comic comic = new Comic();
-          comic.title = item['title'];
-          if (item['description'] == null) {
-            comic.description = '';
-          } else {
-            comic.description = item['description'];
-          }
-          comic.thumbnail = item['thumbnail']['path'] + '.' +
-              item['thumbnail']['extension'].toString().toLowerCase();
-
-          comics.add(comic);
+      for (var item in data) {
+        Comic comic = new Comic();
+        comic.title = item['title'];
+        if (item['description'] == null) {
+          comic.description = '';
+        } else {
+          comic.description = item['description'];
         }
+        comic.thumbnail = item['thumbnail']['path'] + '.' +
+            item['thumbnail']['extension'].toString().toLowerCase();
 
-        return comics;
-      // }
+        comics.add(comic);
+      }
+
+      return comics;
     } catch (ex) {
-      // textErrorComics = 'Error en la conexión.';
-      // showErrorComics = true;
-      // print('error en la conexión');
       return ex;
-    } finally {
-      // itsBusyComics = false;
-      // itsBusy = false;
     }
   }
 }
