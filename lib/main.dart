@@ -46,7 +46,6 @@ Future _pushAboutDialog(BuildContext context) async {
 class _TextAttributionMarvel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return new Center(
       child: new Container(
         padding: EdgeInsets.all(5.0),
@@ -71,8 +70,8 @@ class _MyHomePageState extends State<MyHomePage> {
   String textFieldName;
   MainController mainController = new MainController();
   List<Character> characters;
-  bool itsBusy;
-  bool showError;
+  bool itsBusy = false;
+//  bool showError;
   String textError;
   String oldText;
   final FocusNode _focusNode = new FocusNode();
@@ -80,27 +79,9 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     characters = mainController.characters;
-    itsBusy = mainController.itsBusy;
-    showError = mainController.showError;
+//    itsBusy = mainController.itsbusy;
+//    showError = mainController.showError;
     textError = mainController.textError;
-
-    Future checkTextField(String text) async {
-      oldText = text;
-      await new Future.delayed(new Duration(seconds: 2));
-      if (text.length >= 3 && oldText == text) {
-        _focusNode.unfocus();
-        setState((){
-          itsBusy;
-          showError;
-        });
-        await mainController.getData(text);
-        setState(() {
-          characters;
-          itsBusy;
-          showError;
-        });
-      }
-    }
 
 //    Widget titleSection = new Center(
 //      child: new Container(
@@ -116,6 +97,24 @@ class _MyHomePageState extends State<MyHomePage> {
 //      ),
 //    );
 
+    void _checkTextField(String text) async {
+      oldText = text;
+      await new Future.delayed(new Duration(seconds: 2));
+      if (text.length >= 3 && oldText == text) {
+        _focusNode.unfocus();
+        setState((){
+          itsBusy = true;
+//          showError;
+        });
+        await mainController.getData(text);
+        setState(() {
+          characters;
+          itsBusy = false;
+//          showError;
+        });
+      }
+    }
+
     Widget textFieldSuperHero = new Container(
       margin: const EdgeInsets.only(left: 10.0, right: 10.0, bottom: 10.0, top: 10.0),
       child: TextField(
@@ -130,78 +129,75 @@ class _MyHomePageState extends State<MyHomePage> {
           filled: true,
         ),
         onChanged: (text) {
-          checkTextField(text);
+          _checkTextField(text);
         },
         style: TextStyle(fontSize: 22.0, color: Colors.black),
       ),
     );
 
-    Widget loadingIndicator = new Expanded(
-      child : new Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: <Widget>[
-          new CircularProgressIndicator()
-        ],
-      )
+    Widget loadingIndicator = new Center(
+        child: new CircularProgressIndicator()
     );
 
-    Widget labelResults = new Expanded(
-      child: new Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: <Widget>[
-          new Container(
-            child: new Text(
-              '$textError',
-              style: new TextStyle(
-                fontSize: 20.0,
-                color: Colors.grey,
-              ),
-            ),
-          )
-        ],
+    Widget textResults = new Center(
+      child: new Text(
+        '$textError',
+        style: new TextStyle(
+          fontSize: 20.0,
+          color: Colors.grey,
+        ),
       ),
     );
 
-    Widget listViewCharacter = new Expanded(
-      child: new ListView.builder(
-        itemCount: characters == null ? 0 : characters.length,
-        itemBuilder: (BuildContext context, int index) {
-          return new Column(
-            children: <Widget>[
-              new Container(
-                padding: new EdgeInsets.all(5.0),
-                child: new ListTile(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      new MaterialPageRoute(
-                        builder: (BuildContext context) => new DetailPage(character: characters[index]),
-                      ), 
-                    );
-                  },
-                  leading: new Image.network(
-                    characters[index].thumbnail,
-                  ),
-                  title: new Text(
-                    characters[index].name,
-                    style: new TextStyle(fontSize: 20.0),
-                    maxLines: 1,
-                  ),
-                  subtitle: new Text(
-                    characters[index].description,
-                    style: new TextStyle(fontSize: 15.0),
-                    maxLines: 3,
-                  ),
+    Widget listViewCharacter = new ListView.builder(
+      itemCount: characters == null ? 0 : characters.length,
+      itemBuilder: (BuildContext context, int index) {
+        return new Column(
+          children: <Widget>[
+            new Container(
+              padding: new EdgeInsets.all(5.0),
+              child: new ListTile(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    new MaterialPageRoute(
+                      builder: (BuildContext context) => new DetailPage(character: characters[index]),
+                    ),
+                  );
+                },
+                leading: new Image.network(
+                  characters[index].thumbnail,
+                ),
+                title: new Text(
+                  characters[index].name,
+                  style: new TextStyle(fontSize: 20.0),
+                  maxLines: 1,
+                ),
+                subtitle: new Text(
+                  characters[index].description,
+                  style: new TextStyle(fontSize: 15.0),
+                  maxLines: 3,
                 ),
               ),
-              new Divider(height: 2.0),
-            ],
-          );
-        }
-      )
+            ),
+            new Divider(height: 2.0),
+          ],
+        );
+      }
     );
+
+    // TODO: este es el widget que se actualiza
+    Widget _listViewHandler () {
+      if (itsBusy) return loadingIndicator;
+      if (textError.isNotEmpty) return textResults;
+      return listViewCharacter;
+//      return new Container();
+
+//      !itsBusy && !showError ? listViewCharacter : new Container(),
+//      itsBusy ? loadingIndicator : new Container(),
+//      showError ? labelResults : new Container(),
+//      return null;
+    }
 
     return new Scaffold(
       appBar: new AppBar(
@@ -216,10 +212,9 @@ class _MyHomePageState extends State<MyHomePage> {
       body: new Column(
         children: <Widget>[
           textFieldSuperHero,
-          // TODO: cambiar esto de ahí abajo
-          !itsBusy && !showError ? listViewCharacter : new Container(),
-          itsBusy ? loadingIndicator : new Container(),
-          showError ? labelResults : new Container(),
+          Expanded(
+            child: _listViewHandler(),
+          ),
           _TextAttributionMarvel(),
         ],
       ),

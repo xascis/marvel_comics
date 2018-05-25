@@ -10,21 +10,23 @@ import 'dart:async';
 
 // pasar a un widgetless y ordenar mejor los widgets
 
-class DetailPage extends StatefulWidget {
+//class DetailPage extends StatefulWidget {
+//  final Character character;
+//
+//  DetailPage({Key key, this.character}) : super (key: key);
+//
+//  @override
+//  _DetailPageState createState() => new _DetailPageState();
+//}
+
+class DetailPage extends StatelessWidget {
+  DetailPage({Key key, @required this.character}) : super (key: key);
   final Character character;
 
-  DetailPage({Key key, this.character}) : super (key: key);
-
-  @override
-  _DetailPageState createState() => new _DetailPageState();
-}
-
-class _DetailPageState extends State<DetailPage> {
   DetailController detailController = new DetailController();
 
   @override
   Widget build(BuildContext context){
-    Character character = widget.character;
     int numberComics = character.numberComics;
     int numberEvents = character.numberEvents;
 

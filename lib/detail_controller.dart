@@ -34,11 +34,9 @@ class DetailController {
       for (var item in data) {
         Comic comic = new Comic();
         comic.title = item['title'];
-        if (item['description'] == null) {
-          comic.description = '';
-        } else {
-          comic.description = item['description'];
-        }
+        (item['description'] == null)
+            ? comic.description = ''
+            : comic.description = item['description'];
         comic.thumbnail = item['thumbnail']['path'] + '.' +
             item['thumbnail']['extension'].toString().toLowerCase();
 
