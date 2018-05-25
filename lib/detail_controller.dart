@@ -6,6 +6,8 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'dart:async';
 
+// simplificar, pasar a map
+
 class DetailController {
   
   Future<List<Comic>> getComics(Character character, String type) async {

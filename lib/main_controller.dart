@@ -2,6 +2,8 @@ import 'character_model.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
+// eliminar propiedades, pasar a map, retornar lista?
+
 class MainController {
   List<Character> characters = new List<Character>();
   String textError = '';

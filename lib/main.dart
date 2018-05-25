@@ -5,6 +5,8 @@ import 'package:marvel_comics/character_model.dart';
 import 'package:marvel_comics/main_controller.dart';
 import 'package:marvel_comics/detail.dart';
 
+// pasar a widgetless, implementar controlador textfield, cambiar apariencia textfield, eliminar text inicial
+
 void main() => runApp(new MyApp());
 
 class MyApp extends StatelessWidget {
@@ -13,7 +15,10 @@ class MyApp extends StatelessWidget {
     return new MaterialApp(
       title: 'Marvel Comic',
       theme: new ThemeData(
-          primarySwatch: Colors.red, primaryColorDark: Colors.red[800]),
+          primarySwatch: Colors.red,
+          primaryColorDark: Colors.red[800],
+          accentColor: Colors.orangeAccent,
+      ),
       home: new MyHomePage(title: 'Marvel'),
     );
   }
@@ -47,19 +52,14 @@ class _MyHomePageState extends State<MyHomePage> {
 
     Future checkTextField(String text) async {
       oldText = text;
-      
       await new Future.delayed(new Duration(seconds: 2));
-
       if (text.length >= 3 && oldText == text) {
         _focusNode.unfocus();
-
         setState((){
           itsBusy;
           showError;
         });
-
         await mainController.getData(text);
-
         setState(() {
           characters;
           itsBusy;
@@ -68,28 +68,30 @@ class _MyHomePageState extends State<MyHomePage> {
       }
     }
 
-    
-
-    Widget titleSection = new Center(
-      child: new Container(
-        margin: const EdgeInsets.only(top: 10.0),
-        padding: const EdgeInsets.all(5.0),
-        child: new Text(
-          'Busca tu Súper-Héroe',
-          style: new TextStyle(
-            fontSize: 20.0,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-      ),
-    );
+//    Widget titleSection = new Center(
+//      child: new Container(
+//        margin: const EdgeInsets.only(top: 10.0),
+//        padding: const EdgeInsets.all(5.0),
+//        child: new Text(
+//          'Busca tu Súper-Héroe',
+//          style: new TextStyle(
+//            fontSize: 20.0,
+//            fontWeight: FontWeight.bold,
+//          ),
+//        ),
+//      ),
+//    );
 
     Widget textFieldSuperHero =new Container(
-      margin: const EdgeInsets.only(left: 10.0, right: 10.0, bottom: 10.0),
+      margin: const EdgeInsets.only(left: 10.0, right: 10.0, bottom: 10.0, top: 10.0),
       child: new TextField(
         focusNode: _focusNode,
         textAlign: TextAlign.center,
-        decoration: new InputDecoration(hintText: 'Escribe el nombre'),
+        decoration: new InputDecoration(
+          labelText: 'Busca a tu Súper-Héroe',
+          labelStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0),
+          filled: true,
+        ),
         onChanged: (text) {
           checkTextField(text);
         },
@@ -181,8 +183,9 @@ class _MyHomePageState extends State<MyHomePage> {
       body: new Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
-          titleSection,
+//          titleSection,
           textFieldSuperHero,
+          // TODO: cambiar esto de ahí abajo
           !itsBusy && !showError ? listViewCharacter : new Container(),
           itsBusy ? loadingIndicator : new Container(),
           showError ? labelResults : new Container(),

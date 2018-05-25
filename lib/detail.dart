@@ -7,6 +7,9 @@ import 'package:marvel_comics/detail_controller.dart';
 
 import 'dart:async';
 
+
+// pasar a un widgetless y ordenar mejor los widgets
+
 class DetailPage extends StatefulWidget {
   final Character character;
 
