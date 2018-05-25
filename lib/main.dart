@@ -5,7 +5,7 @@ import 'package:marvel_comics/character_model.dart';
 import 'package:marvel_comics/main_controller.dart';
 import 'package:marvel_comics/detail.dart';
 
-// pasar a widgetless, implementar controlador textfield, cambiar apariencia textfield, eliminar text inicial
+// TODO: pasar a widgetless, implementar controlador textfield, cambiar apariencia textfield, eliminar text inicial
 
 void main() => runApp(new MyApp());
 
@@ -20,6 +20,41 @@ class MyApp extends StatelessWidget {
           accentColor: Colors.orangeAccent,
       ),
       home: new MyHomePage(title: 'Marvel'),
+    );
+  }
+}
+
+Future _pushAboutDialog(BuildContext context) async {
+  await showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return new SimpleDialog(
+          title: const Text('Aplicación creada con Flutter'),
+          children: <Widget>[
+            new SimpleDialogOption(
+              child: const Text('Ok'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            )
+          ],
+        );
+      }
+  );
+}
+
+class _TextAttributionMarvel extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    // TODO: implement build
+    return new Center(
+      child: new Container(
+        padding: EdgeInsets.all(5.0),
+        child: new Text(
+          'Data provided by Marvel. © 2014 Marvel',
+          style: new TextStyle(fontSize: 10.0, fontStyle: FontStyle.italic),
+        ),
+      ),
     );
   }
 }
@@ -39,6 +74,7 @@ class _MyHomePageState extends State<MyHomePage> {
   bool itsBusy;
   bool showError;
   String textError;
+  String oldText;
   final FocusNode _focusNode = new FocusNode();
 
   @override
@@ -48,17 +84,11 @@ class _MyHomePageState extends State<MyHomePage> {
     showError = mainController.showError;
     textError = mainController.textError;
 
-    String oldText;
-
     Future checkTextField(String text) async {
       oldText = text;
       await new Future.delayed(new Duration(seconds: 2));
       if (text.length >= 3 && oldText == text) {
         _focusNode.unfocus();
-        setState((){
-          itsBusy;
-          showError;
-        });
         await mainController.getData(text);
         setState(() {
           characters;
@@ -82,20 +112,23 @@ class _MyHomePageState extends State<MyHomePage> {
 //      ),
 //    );
 
-    Widget textFieldSuperHero =new Container(
+    Widget textFieldSuperHero = new Container(
       margin: const EdgeInsets.only(left: 10.0, right: 10.0, bottom: 10.0, top: 10.0),
-      child: new TextField(
+      child: TextField(
         focusNode: _focusNode,
         textAlign: TextAlign.center,
-        decoration: new InputDecoration(
+        decoration: InputDecoration(
           labelText: 'Busca a tu Súper-Héroe',
-          labelStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0),
+          labelStyle: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 20.0,
+          ),
           filled: true,
         ),
         onChanged: (text) {
           checkTextField(text);
         },
-        style: new TextStyle(fontSize: 22.0, color: Colors.black),
+        style: TextStyle(fontSize: 22.0, color: Colors.black),
       ),
     );
 
@@ -149,9 +182,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                   title: new Text(
                     characters[index].name,
-                    style: new TextStyle(
-                      fontSize: 20.0,
-                    ),
+                    style: new TextStyle(fontSize: 20.0),
                     maxLines: 1,
                   ),
                   subtitle: new Text(
@@ -161,9 +192,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                 ),
               ),
-              new Divider(
-                height: 2.0,
-              ),
+              new Divider(height: 2.0),
             ],
           );
         }
@@ -176,47 +205,21 @@ class _MyHomePageState extends State<MyHomePage> {
         actions: <Widget>[
           new IconButton(
             icon: const Icon(Icons.chat),
-            onPressed: _pushAboutDialog,
+            onPressed: () {_pushAboutDialog(context);},
           ),
         ],
       ),
       body: new Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
-//          titleSection,
           textFieldSuperHero,
           // TODO: cambiar esto de ahí abajo
           !itsBusy && !showError ? listViewCharacter : new Container(),
           itsBusy ? loadingIndicator : new Container(),
           showError ? labelResults : new Container(),
-          new Container(
-            margin: const EdgeInsets.all(10.0),
-            child: new Text(
-              'Data provided by Marvel. © 2014 Marvel',
-              style: new TextStyle(fontSize: 10.0, fontStyle: FontStyle.italic),
-            ),
-          )
+          _TextAttributionMarvel(),
         ],
       ),
     );
   }
 
-  void _pushAboutDialog() async {
-    await showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return new SimpleDialog(
-          title: const Text('Aplicación creada con Flutter'),
-          children: <Widget>[
-            new SimpleDialogOption(
-              child: const Text('Ok'),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            )
-          ],
-        );
-      }
-    );
-  }
 }
