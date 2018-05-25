@@ -89,6 +89,10 @@ class _MyHomePageState extends State<MyHomePage> {
       await new Future.delayed(new Duration(seconds: 2));
       if (text.length >= 3 && oldText == text) {
         _focusNode.unfocus();
+        setState((){
+          itsBusy;
+          showError;
+        });
         await mainController.getData(text);
         setState(() {
           characters;
