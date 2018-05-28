@@ -1,12 +1,11 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'package:marvel_comics/character_model.dart';
 import 'package:marvel_comics/comic_model.dart';
 import 'package:marvel_comics/detail_controller.dart';
-
-import 'dart:async';
-
 
 // pasar a un widgetless y ordenar mejor los widgets
 

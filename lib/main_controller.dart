@@ -1,8 +1,8 @@
-import 'character_model.dart';
-
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
+
+import 'character_model.dart';
 
 class MainController {
   List<Character> characters = new List<Character>();

@@ -1,10 +1,10 @@
-import 'package:marvel_comics/character_model.dart';
-import 'package:marvel_comics/comic_model.dart';
+import 'dart:async';
+import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 
-import 'dart:convert';
-import 'dart:async';
+import 'package:marvel_comics/character_model.dart';
+import 'package:marvel_comics/comic_model.dart';
 
 // simplificar, pasar a map
 

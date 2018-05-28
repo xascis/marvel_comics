@@ -1,11 +1,10 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+
 import 'package:marvel_comics/character_model.dart';
 import 'package:marvel_comics/main_controller.dart';
 import 'package:marvel_comics/detail.dart';
-
-// TODO: implementar controlador textfield, cambiar apariencia textfield, eliminar text inicial
 
 void main() => runApp(new MyApp());
 
@@ -104,7 +103,7 @@ class _MyHomePageState extends State<MyHomePage> {
     _characters = _mainController.characters;
     _textError = _mainController.textError;
 
-    Widget textFieldSuperHero = new Container(
+    Widget _textFieldSuperHero = new Container(
       margin: const EdgeInsets.only(left: 10.0, right: 10.0, bottom: 10.0, top: 10.0),
       child: TextField(
         focusNode: _focusNode,
@@ -124,7 +123,7 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
     );
 
-    Widget textResults = new Center(
+    Widget _textResults = new Center(
       child: new Text(
         '$_textError',
         style: new TextStyle(
@@ -134,8 +133,8 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
     );
 
-    Widget listViewCharacter = new ListView.builder(
-      itemCount: _characters == null ? 0 : _characters.length,
+    Widget _listViewCharacter = new ListView.builder(
+      itemCount: _characters.length ?? 0 ,
       itemBuilder: (BuildContext context, int index) {
         return new Column(
           children: <Widget>[
@@ -171,17 +170,10 @@ class _MyHomePageState extends State<MyHomePage> {
       }
     );
 
-    // TODO: este es el widget que se actualiza
     Widget _listViewHandler () {
       if (_itsBusy) return _LoadingIndicator();
-      if (_textError.isNotEmpty) return textResults;
-      return listViewCharacter;
-//      return new Container();
-
-//      !itsBusy && !showError ? listViewCharacter : new Container(),
-//      itsBusy ? loadingIndicator : new Container(),
-//      showError ? labelResults : new Container(),
-//      return null;
+      if (_textError.isNotEmpty) return _textResults;
+      return _listViewCharacter;
     }
 
     return new Scaffold(
@@ -190,13 +182,13 @@ class _MyHomePageState extends State<MyHomePage> {
         actions: <Widget>[
           new IconButton(
             icon: const Icon(Icons.chat),
-            onPressed: () {_pushAboutDialog(context);},
+            onPressed: () { _pushAboutDialog(context); },
           ),
         ],
       ),
       body: new Column(
         children: <Widget>[
-          textFieldSuperHero,
+          _textFieldSuperHero,
           Expanded(
             child: _listViewHandler(),
           ),
