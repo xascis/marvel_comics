@@ -9,26 +9,29 @@ class Character {
 //  int numberComics;
 //  int numberEvents;
 
-  Character(this.id, this.name, this.description, this.thumbnail, this.urls,
-      this.availableComics);
-
-  factory Character.fromJson(Map json) {
-    var urls;
-    for (var url in json['urls']) {
-      var type = url['type'];
-      urls[type] = url['url'];
-    }
-    return new Character(
-        json['id'],
-        json['name'],
-        json['description'],
-        json['thumbnail']['path'] + '.' +
-            json['thumbnail']['extension'].toString().toLowerCase(),
-        urls,
-        {
-          'comics': json['comics']['available'],
-          'events': json['events']['available']
-        });
+//  Character(this.id, this.name, this.description, this.thumbnail, this.urls,
+//      this.availableComics);
+//
+//  factory Character.fromJson(Map json) {
+//    var urls;
+//    for (var url in json['urls']) {
+//      var type = url['type'];
+//      urls[type] = url['url'];
+//    }
+//    return new Character(
+//        json['id'],
+//        json['name'],
+//        json['description'],
+//        json['thumbnail']['path'] +
+//            '.' +
+//            json['thumbnail']['extension'].toString().toLowerCase(),
+//        urls,
+//        {
+//          'comics': json['comics']['available'],
+//          'events': json['events']['available']
+//        });
+//      }
+  }
 
 //    return new
 //  }
@@ -45,4 +48,3 @@ class Character {
 //          'comics': json['comics']['available'],
 //          'events': json['events']['available']
 //        };
-  }

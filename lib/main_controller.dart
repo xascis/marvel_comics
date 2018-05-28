@@ -22,7 +22,7 @@ class MainController {
         textError = '';
 
         for (var item in data){
-          characters.add(Character.fromJson(item));
+//          characters.add(Character.fromJson(item));
 
           Character character = new Character();
           character.name = item['name'];
@@ -33,7 +33,7 @@ class MainController {
           character.availableComics['comics'] = item['comics']['available'];
           character.availableComics['events'] = item['events']['available'];
 //          character.availableComics['events'] = item['events'];
-//          print(character.availableComics);
+          print(character.availableComics);
 //          character.numberComics = item['comics']['available'];
 //          character.numberEvents = item['events']['available'];
 
