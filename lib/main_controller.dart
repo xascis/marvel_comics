@@ -1,5 +1,7 @@
 import 'character_model.dart';
+
 import 'dart:convert';
+
 import 'package:http/http.dart' as http;
 
 class MainController {
@@ -22,9 +24,7 @@ class MainController {
         for (var item in data){
           Character character = new Character();
           character.name = item['name'];
-          (item['description'] == null)
-              ? character.description = ''
-              : character.description = item['description'];
+          character.description = item['description'] ?? '';
           character.id = item['id'];
           character.thumbnail = item['thumbnail']['path'] + '.' + item['thumbnail']['extension'].toString().toLowerCase();
           character.numberComics = item['comics']['available'];

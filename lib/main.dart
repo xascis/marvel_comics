@@ -5,7 +5,7 @@ import 'package:marvel_comics/character_model.dart';
 import 'package:marvel_comics/main_controller.dart';
 import 'package:marvel_comics/detail.dart';
 
-// TODO: pasar a widgetless, implementar controlador textfield, cambiar apariencia textfield, eliminar text inicial
+// TODO: implementar controlador textfield, cambiar apariencia textfield, eliminar text inicial
 
 void main() => runApp(new MyApp());
 
@@ -24,25 +24,6 @@ class MyApp extends StatelessWidget {
   }
 }
 
-Future _pushAboutDialog(BuildContext context) async {
-  await showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return new SimpleDialog(
-          title: const Text('Aplicación creada con Flutter'),
-          children: <Widget>[
-            new SimpleDialogOption(
-              child: const Text('Ok'),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            )
-          ],
-        );
-      }
-  );
-}
-
 class _TextAttributionMarvel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -58,6 +39,15 @@ class _TextAttributionMarvel extends StatelessWidget {
   }
 }
 
+class _LoadingIndicator extends StatelessWidget {
+  @override
+  Widget build(BuildContext context){
+    return new Center(
+        child: new CircularProgressIndicator()
+    );
+  }
+}
+
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key, this.title}) : super(key: key);
   final String title;
@@ -67,53 +57,52 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  String textFieldName;
-  MainController mainController = new MainController();
-  List<Character> characters;
-  bool itsBusy = false;
-//  bool showError;
-  String textError;
-  String oldText;
+  MainController _mainController = new MainController();
+  List<Character> _characters;
+  bool _itsBusy = false;
+  String _textError;
+  String _oldText = '';
   final FocusNode _focusNode = new FocusNode();
+
+  void _pushAboutDialog(BuildContext context) async {
+    await showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return new SimpleDialog(
+            title: const Text('Aplicación creada con Flutter'),
+            children: <Widget>[
+              new SimpleDialogOption(
+                child: const Text('Ok'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              )
+            ],
+          );
+        }
+    );
+  }
+
+  void _checkTextField(String text) async {
+    _oldText = text;
+    await new Future.delayed(new Duration(seconds: 2));
+    if (text.length >= 3 && _oldText == text) {
+      _focusNode.unfocus();
+      setState((){
+        _itsBusy = true;
+      });
+      await _mainController.getData(text);
+      setState(() {
+        _characters;
+        _itsBusy = false;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    characters = mainController.characters;
-//    itsBusy = mainController.itsbusy;
-//    showError = mainController.showError;
-    textError = mainController.textError;
-
-//    Widget titleSection = new Center(
-//      child: new Container(
-//        margin: const EdgeInsets.only(top: 10.0),
-//        padding: const EdgeInsets.all(5.0),
-//        child: new Text(
-//          'Busca tu Súper-Héroe',
-//          style: new TextStyle(
-//            fontSize: 20.0,
-//            fontWeight: FontWeight.bold,
-//          ),
-//        ),
-//      ),
-//    );
-
-    void _checkTextField(String text) async {
-      oldText = text;
-      await new Future.delayed(new Duration(seconds: 2));
-      if (text.length >= 3 && oldText == text) {
-        _focusNode.unfocus();
-        setState((){
-          itsBusy = true;
-//          showError;
-        });
-        await mainController.getData(text);
-        setState(() {
-          characters;
-          itsBusy = false;
-//          showError;
-        });
-      }
-    }
+    _characters = _mainController.characters;
+    _textError = _mainController.textError;
 
     Widget textFieldSuperHero = new Container(
       margin: const EdgeInsets.only(left: 10.0, right: 10.0, bottom: 10.0, top: 10.0),
@@ -135,13 +124,9 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
     );
 
-    Widget loadingIndicator = new Center(
-        child: new CircularProgressIndicator()
-    );
-
     Widget textResults = new Center(
       child: new Text(
-        '$textError',
+        '$_textError',
         style: new TextStyle(
           fontSize: 20.0,
           color: Colors.grey,
@@ -150,7 +135,7 @@ class _MyHomePageState extends State<MyHomePage> {
     );
 
     Widget listViewCharacter = new ListView.builder(
-      itemCount: characters == null ? 0 : characters.length,
+      itemCount: _characters == null ? 0 : _characters.length,
       itemBuilder: (BuildContext context, int index) {
         return new Column(
           children: <Widget>[
@@ -161,20 +146,20 @@ class _MyHomePageState extends State<MyHomePage> {
                   Navigator.push(
                     context,
                     new MaterialPageRoute(
-                      builder: (BuildContext context) => new DetailPage(character: characters[index]),
+                      builder: (BuildContext context) => new DetailPage(character: _characters[index]),
                     ),
                   );
                 },
                 leading: new Image.network(
-                  characters[index].thumbnail,
+                  _characters[index].thumbnail,
                 ),
                 title: new Text(
-                  characters[index].name,
+                  _characters[index].name,
                   style: new TextStyle(fontSize: 20.0),
                   maxLines: 1,
                 ),
                 subtitle: new Text(
-                  characters[index].description,
+                  _characters[index].description,
                   style: new TextStyle(fontSize: 15.0),
                   maxLines: 3,
                 ),
@@ -188,8 +173,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
     // TODO: este es el widget que se actualiza
     Widget _listViewHandler () {
-      if (itsBusy) return loadingIndicator;
-      if (textError.isNotEmpty) return textResults;
+      if (_itsBusy) return _LoadingIndicator();
+      if (_textError.isNotEmpty) return textResults;
       return listViewCharacter;
 //      return new Container();
 
