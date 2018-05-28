@@ -6,8 +6,6 @@ import 'package:http/http.dart' as http;
 import 'package:marvel_comics/character_model.dart';
 import 'package:marvel_comics/comic_model.dart';
 
-// simplificar, pasar a map
-
 class DetailController {
   
   Future<List<Comic>> getComics(Character character, String type) async {
@@ -32,11 +30,7 @@ class DetailController {
       var data = responseJson['data']['results'];
 
       for (var item in data) {
-        Comic comic = new Comic(
-            item['title'],
-            item['description'] ?? '',
-            item['thumbnail']['path'] + '.' + item['thumbnail']['extension'].toString().toLowerCase());
-        comics.add(comic);
+        comics.add(Comic.fromJson(item));
       }
 
       return comics;

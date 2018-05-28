@@ -7,7 +7,7 @@ import 'package:marvel_comics/character_model.dart';
 import 'package:marvel_comics/comic_model.dart';
 import 'package:marvel_comics/detail_controller.dart';
 
-// pasar a un widgetless y ordenar mejor los widgets
+// TODO: pasar a un widgetless y ordenar mejor los widgets
 
 //class DetailPage extends StatefulWidget {
 //  final Character character;
