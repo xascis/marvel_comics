@@ -6,9 +6,9 @@ class Character {
   String urlDetail;
   String urlWiki;
   String urlComics;
-  Map availableComics;
-  int numberComics;
-  int numberEvents;
+  Map<String, dynamic> availableComics = new Map();
+//  int numberComics;
+//  int numberEvents;
 
 //  Character(this.id, this.name, this.description, this.thumbnail, this.urlDetail, this.urlWiki, this.urlComics, this.availableComics);
 }

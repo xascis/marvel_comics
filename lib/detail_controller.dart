@@ -9,14 +9,15 @@ import 'package:marvel_comics/comic_model.dart';
 class DetailController {
   
   Future<List<Comic>> getComics(Character character, String type) async {
-    switch (type){
-      case 'comics':
-        if (character.numberComics == 0) return;
-        break;
-      default:
-        if (character.numberEvents == 0) return;
-        break;
-    }
+    if (character.availableComics[type] == 0) return;
+//    switch (type){
+//      case 'comics':
+//        if (character.numberComics == 0) return;
+//        break;
+//      default:
+//        if (character.numberEvents == 0) return;
+//        break;
+//    }
 
     try {
       List<Comic> comics = new List<Comic>();

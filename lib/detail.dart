@@ -26,8 +26,9 @@ class DetailPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context){
-    int numberComics = character.numberComics;
-    int numberEvents = character.numberEvents;
+    Map availableComics = character.availableComics;
+    int numberComics = availableComics['comics'];
+    int numberEvents = availableComics['events'];
 
     Widget imageHero =  new Image.network(
       character.thumbnail,
@@ -205,28 +206,34 @@ class DetailPage extends StatelessWidget {
             case ConnectionState.waiting:
               return loadingIndicator;
             default:
-              switch (type) {
-                case 'comics':
-                  if (snapshot.hasError) {
-                    return textResults('Error en la conexión');
-                  } else if (character.numberComics != 0) {
-                    // print(snapshot.data);
-                    return listViewComics(snapshot.data);
-                  } else {
-                    return textResults('No existen resultados');
-                  }
-                  break;
-                default:
-                  if (snapshot.hasError) {
-                    return textResults('Error en la conexión');
-                  } else if (character.numberEvents != 0) {
-                    // print(snapshot.data);
-                    return listViewComics(snapshot.data);
-                  } else {
-                    return textResults('No existen resultados');
-                  }
+              if (snapshot.hasError) {
+                return textResults('Error en la conexión');
+              } else if (character.availableComics[type] != 0) {
+                return listViewComics(snapshot.data);
+              } else {
+                return textResults('No existen resultados');
               }
-              
+//              switch (type) {
+//                case 'comics':
+//                  if (snapshot.hasError) {
+//                    return textResults('Error en la conexión');
+//                  } else if (character.availableComics[type] != 0) {
+//                    // print(snapshot.data);
+//                    return listViewComics(snapshot.data);
+//                  } else {
+//                    return textResults('No existen resultados');
+//                  }
+//                  break;
+//                default:
+//                  if (snapshot.hasError) {
+//                    return textResults('Error en la conexión');
+//                  } else if (character.numberEvents != 0) {
+//                    // print(snapshot.data);
+//                    return listViewComics(snapshot.data);
+//                  } else {
+//                    return textResults('No existen resultados');
+//                  }
+//              }
           }
         }
       );

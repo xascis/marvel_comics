@@ -27,7 +27,9 @@ class MainController {
           character.description = item['description'] ?? '';
           character.id = item['id'];
           character.thumbnail = item['thumbnail']['path'] + '.' + item['thumbnail']['extension'].toString().toLowerCase();
-          character.availableComics.(item['comics']);
+//          character.availableComics = { 'comics' : item['comics']['available'] };
+          character.availableComics['comics'] = item['comics']['available'];
+          character.availableComics['events'] = item['events']['available'];
 //          character.availableComics['events'] = item['events'];
           print(character.availableComics);
           character.numberComics = item['comics']['available'];
