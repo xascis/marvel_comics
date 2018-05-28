@@ -22,6 +22,8 @@ class MainController {
         textError = '';
 
         for (var item in data){
+          characters.add(Character.fromJson(item));
+
           Character character = new Character();
           character.name = item['name'];
           character.description = item['description'] ?? '';
@@ -31,22 +33,27 @@ class MainController {
           character.availableComics['comics'] = item['comics']['available'];
           character.availableComics['events'] = item['events']['available'];
 //          character.availableComics['events'] = item['events'];
-          print(character.availableComics);
-          character.numberComics = item['comics']['available'];
-          character.numberEvents = item['events']['available'];
+//          print(character.availableComics);
+//          character.numberComics = item['comics']['available'];
+//          character.numberEvents = item['events']['available'];
+
+//          character.urls = item['urls'];
+//          print(character.urls);
 
           for (var url in item['urls']){
-            switch (url['type']){
-              case 'detail':
-                character.urlDetail = url['url'];
-                break;
-              case 'wiki':
-                character.urlWiki = url['url'];
-                break;
-              case 'comiclink':
-                character.urlComics = url['url'];
-                break;
-            }
+            var type = url['type'];
+            character.urls[type] = url['url'];
+//            switch (url['type']){
+//              case 'detail':
+//                character.urls['detail'] = url['url'];
+//                break;
+//              case 'wiki':
+//                character.urlWiki = url['url'];
+//                break;
+//              case 'comiclink':
+//                character.urlComics = url['url'];
+//                break;
+//            }
           }
           characters.add(character);
         }

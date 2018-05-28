@@ -22,11 +22,12 @@ class DetailPage extends StatelessWidget {
   DetailPage({Key key, @required this.character}) : super (key: key);
   final Character character;
 
-  DetailController detailController = new DetailController();
+  final DetailController detailController = new DetailController();
 
   @override
   Widget build(BuildContext context){
     Map availableComics = character.availableComics;
+    Map urls = character.urls;
     int numberComics = availableComics['comics'];
     int numberEvents = availableComics['events'];
 
@@ -101,21 +102,21 @@ class DetailPage extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: <Widget>[
           new RaisedButton(
-            onPressed: (character.urlDetail != null) ? () {_launchUrl(character.urlDetail);} : null,
+            onPressed: (urls['detail'] != null) ? () {_launchUrl(urls['detail']);} : null,
             child: new Text(
               'Detalles', 
               style: new TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
             ),
           ),
           new RaisedButton(
-            onPressed: (character.urlWiki != null) ? () {_launchUrl(character.urlWiki);} : null,
+            onPressed: (urls['wiki'] != null) ? () {_launchUrl(urls['wiki']);} : null,
             child: new Text(
               'Wiki', 
               style: new TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
             ),
           ),
           new RaisedButton(
-            onPressed: (character.urlComics != null) ? () {_launchUrl(character.urlComics);} : null,
+            onPressed: (urls['comiclink'] != null) ? () {_launchUrl(urls['comiclink']);} : null,
             child: new Text(
               'Comics', 
               style: new TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
