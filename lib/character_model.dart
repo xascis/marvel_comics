@@ -8,7 +8,4 @@ class Character {
   String urlComics;
   int numberComics;
   int numberEvents;
-
-  // crear un constructor
-
 }

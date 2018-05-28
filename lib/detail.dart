@@ -145,7 +145,7 @@ class DetailPage extends StatelessWidget {
       ],
     );
 
-    Column labelResults(String textError) {
+    Column textResults(String textError) {
       return new Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -209,22 +209,22 @@ class DetailPage extends StatelessWidget {
               switch (type) {
                 case 'comics':
                   if (snapshot.hasError) {
-                    return labelResults('Error en la conexión');
+                    return textResults('Error en la conexión');
                   } else if (character.numberComics != 0) {
                     // print(snapshot.data);
                     return listViewComics(snapshot.data);
                   } else {
-                    return labelResults('No existen resultados');
+                    return textResults('No existen resultados');
                   }
                   break;
                 default:
                   if (snapshot.hasError) {
-                    return labelResults('Error en la conexión');
+                    return textResults('Error en la conexión');
                   } else if (character.numberEvents != 0) {
                     // print(snapshot.data);
                     return listViewComics(snapshot.data);
                   } else {
-                    return labelResults('No existen resultados');
+                    return textResults('No existen resultados');
                   }
               }
               

@@ -32,14 +32,10 @@ class DetailController {
       var data = responseJson['data']['results'];
 
       for (var item in data) {
-        Comic comic = new Comic();
-        comic.title = item['title'];
-        (item['description'] == null)
-            ? comic.description = ''
-            : comic.description = item['description'];
-        comic.thumbnail = item['thumbnail']['path'] + '.' +
-            item['thumbnail']['extension'].toString().toLowerCase();
-
+        Comic comic = new Comic(
+            item['title'],
+            item['description'] ?? '',
+            item['thumbnail']['path'] + '.' + item['thumbnail']['extension'].toString().toLowerCase());
         comics.add(comic);
       }
 
