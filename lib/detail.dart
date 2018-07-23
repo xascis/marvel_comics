@@ -248,19 +248,19 @@ class DetailPage extends StatelessWidget {
           child: new Column(
             children: <Widget>[
               new TabBar(
-                  labelColor: Colors.red[900],
-                  labelStyle: new TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
-                  tabs: [
-                    new Tab(text: '($numberComics) Comics'),
-                    new Tab(text: '($numberEvents) Eventos'),
-                  ]
+                labelColor: Colors.red[900],
+                labelStyle: new TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
+                tabs: [
+                  new Tab(text: '($numberComics) Comics'),
+                  new Tab(text: '($numberEvents) Eventos'),
+                ]
               ),
               new Expanded(
                 child: new TabBarView(
-                    children: [
-                      tabBarView('comics'),
-                      tabBarView('events'),
-                    ]
+                  children: [
+                    tabBarView('comics'),
+                    tabBarView('events'),
+                  ]
                 ),
               ),
             ],
