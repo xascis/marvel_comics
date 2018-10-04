@@ -269,7 +269,7 @@ class DetailPage extends StatelessWidget {
       )
     );
 
-    return new Scaffold(
+    return Scaffold(
       appBar: new AppBar(
         title: new Text(character.name),
       ),
