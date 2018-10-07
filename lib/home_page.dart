@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:marvel_comics/character_model.dart';
 import 'package:marvel_comics/detail.dart';
-import 'package:marvel_comics/main_controller.dart';
+import 'package:marvel_comics/home_controller.dart';
 
 class _TextAttributionMarvel extends StatelessWidget {
   @override
@@ -36,7 +36,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  MainController _mainController = new MainController();
+  HomeController _mainController = new HomeController();
   List<Character> _characters;
   bool _itsBusy = false;
   String _textError;

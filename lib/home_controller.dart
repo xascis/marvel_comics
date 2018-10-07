@@ -4,7 +4,7 @@ import 'package:http/http.dart' as http;
 
 import 'character_model.dart';
 
-class MainController {
+class HomeController {
   List<Character> characters = new List<Character>();
   String textError = '';
 

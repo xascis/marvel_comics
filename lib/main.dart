@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:marvel_comics/home_page.dart';
 
 void main(){
-  runApp(new MyApp());
+  runApp(new MarvelApp());
 }
 
-class MyApp extends StatelessWidget {
+class MarvelApp extends StatelessWidget {
+  final store = Store<AppState>();
+
   @override
   Widget build(BuildContext context) {
     return new MaterialApp(
