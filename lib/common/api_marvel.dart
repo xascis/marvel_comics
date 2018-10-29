@@ -15,27 +15,31 @@ class ApiMarvel {
   ApiMarvel._internal();
 
   // characters
-  Future<Map<String,dynamic>> character() async{
-    int ts = 12345;
+  Future<ApiResponse> character() async{
+    int ts = 10;
     String path = "$marvelHost/characters?apikey=$marvelPublicKey&ts=$ts&hash=${createHash(ts)}&orderBy=name";
 
     final response = await http.get(path);
     
     if(!_responseSuccess(response)) throw http.ClientException(response.body);
 
-    final responseMap = json.decode(response.body);
+    ApiResponse responseObj = responseToApiResponse(response);
 
-    return responseMap;
+    return responseObj;
   }
 
+  ApiResponse responseToApiResponse(http.Response response) {
+    final responseMap = json.decode(utf8.decode(response.bodyBytes));
+    ApiResponse responseObject = ApiResponse.fromJson(responseMap);
+    return responseObject;
+  }
   bool _responseSuccess(response) {
     return response.statusCode >= 200 && response.statusCode < 300;
   }
-  
 }
 
 class ApiResponse {
-  final String code;
+  final int code;
   final String status;
   final String copyright;
   final String attributionText;
@@ -60,7 +64,7 @@ class ApiResponseData {
   final int limit;
   final int total;
   final int count;
-  final List<Map> results;
+  final List results;
 
   ApiResponseData({this.offset, this.limit, this.total, this.count, this.results});
 
