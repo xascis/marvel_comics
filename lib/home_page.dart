@@ -6,12 +6,12 @@ import 'package:marvel_comics/home_controller.dart';
 class _TextAttributionMarvel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return new Center(
-      child: new Container(
+    return Center(
+      child: Container(
         padding: EdgeInsets.all(5.0),
-        child: new Text(
+        child: Text(
           'Data provided by Marvel. © 2014 Marvel',
-          style: new TextStyle(fontSize: 10.0, fontStyle: FontStyle.italic),
+          style: TextStyle(fontSize: 10.0, fontStyle: FontStyle.italic),
         ),
       ),
     );
@@ -21,8 +21,8 @@ class _TextAttributionMarvel extends StatelessWidget {
 class _LoadingIndicator extends StatelessWidget {
   @override
   Widget build(BuildContext context){
-    return new Center(
-        child: new CircularProgressIndicator()
+    return Center(
+        child: CircularProgressIndicator()
     );
   }
 }
@@ -32,25 +32,25 @@ class MyHomePage extends StatefulWidget {
   final String title;
 
   @override
-  _MyHomePageState createState() => new _MyHomePageState();
+  _MyHomePageState createState() => _MyHomePageState();
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  HomeController _mainController = new HomeController();
+  HomeController _mainController = HomeController();
   List<Character> _characters;
   bool _itsBusy = false;
   String _textError;
   String _oldText = '';
-  final FocusNode _focusNode = new FocusNode();
+  final FocusNode _focusNode = FocusNode();
 
   void _pushAboutDialog(BuildContext context) async {
     await showDialog(
       context: context,
       builder: (BuildContext context) {
-        return new SimpleDialog(
+        return SimpleDialog(
           title: const Text('Aplicación creada con Flutter'),
           children: <Widget>[
-            new SimpleDialogOption(
+            SimpleDialogOption(
               child: const Text('Ok'),
               onPressed: () {
                 Navigator.of(context).pop();
