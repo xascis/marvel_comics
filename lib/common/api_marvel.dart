@@ -8,15 +8,13 @@ import 'package:marvel_comics/common/utils/format_utils.dart';
 class ApiMarvel {
     static final ApiMarvel _instance = ApiMarvel._internal();
 
-  factory ApiMarvel(){
-    return _instance;
-  }
+  factory ApiMarvel() => _instance;
 
   ApiMarvel._internal();
 
   // characters
   Future<ApiResponse> character() async{
-    int ts = 10;
+    int ts = DateTime.now().millisecond;
     String path = "$marvelHost/characters?apikey=$marvelPublicKey&ts=$ts&hash=${createHash(ts)}&orderBy=name";
 
     final response = await http.get(path);
@@ -36,6 +34,7 @@ class ApiMarvel {
   bool _responseSuccess(response) {
     return response.statusCode >= 200 && response.statusCode < 300;
   }
+  
 }
 
 class ApiResponse {
