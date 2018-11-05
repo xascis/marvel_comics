@@ -14,7 +14,11 @@ class ApiMarvel {
 
   // characters
   Future<ApiResponse> character() async{
+<<<<<<< HEAD
     int ts = DateTime.now().millisecond;
+=======
+    int ts = DateTime.now().microsecond;
+>>>>>>> d45fa3416e8b16e46f8c933e63c05d878f1b19f2
     String path = "$marvelHost/characters?apikey=$marvelPublicKey&ts=$ts&hash=${createHash(ts)}&orderBy=name";
 
     final response = await http.get(path);
