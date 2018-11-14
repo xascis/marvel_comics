@@ -1,21 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:marvel_comics/home_page.dart';
+import 'package:marvel_comics/common/theme.dart';
+import 'package:marvel_comics/features/home/home_screen.dart';
 
 void main(){
-  runApp(new MarvelApp());
+  runApp(MarvelApp());
 }
 
 class MarvelApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return new MaterialApp(
-      theme: new ThemeData(
-        primarySwatch: Colors.red,
-        primaryColorDark: Colors.red[800],
-        accentColor: Colors.orangeAccent,
-      ),
-      home: new MyHomePage(),
+    return MaterialApp(
+      theme: kAppTheme,
+      home: HomeScreen(),
     );
   }
 }

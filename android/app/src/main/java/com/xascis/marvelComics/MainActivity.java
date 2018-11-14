@@ -1,4 +1,4 @@
-package com.yourcompany.marvelcomics;
+package com.xascis.marvelComics;
 
 import android.os.Bundle;
 
