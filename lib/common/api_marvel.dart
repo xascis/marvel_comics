@@ -2,20 +2,15 @@ import 'dart:convert';
 
 import 'package:convert/convert.dart';
 import 'package:crypto/crypto.dart';
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:marvel_comics/common/utils/constants_utils.dart';
 import 'package:marvel_comics/common/utils/secret_constants_utils.dart';
 
 class ApiMarvel {
-  static final ApiMarvel _instance = ApiMarvel._internal();
-
-  factory ApiMarvel() => _instance;
-
-  ApiMarvel._internal();
-
-  // characters
-  Future<ApiResponse> character() async{
+  
+  Future<ApiResponse> call({@required String url}) async{
     int ts = DateTime.now().millisecond;
     String path = "$marvelHost/characters?apikey=$marvelPublicKey&ts=$ts&hash=${createHash(ts)}&orderBy=name";
 
