@@ -9,12 +9,15 @@ import 'package:marvel_comics/common/utils/constants_utils.dart';
 import 'package:marvel_comics/common/utils/secret_constants_utils.dart';
 
 class ApiMarvel {
+
+  http.Client client = http.Client();
   
   Future<ApiResponse> call({@required String url}) async{
     int ts = DateTime.now().millisecond;
-    String path = "$marvelHost/characters?apikey=$marvelPublicKey&ts=$ts&hash=${createHash(ts)}&orderBy=name";
+    String path = "$marvelHost/$url?apikey=$marvelPublicKey&ts=$ts&hash=${createHash(ts)}&orderBy=name";
 
-    final response = await http.get(path);
+    final response = await this.client.get(path);
+    client.close();
     
     if(!_responseSuccess(response)) throw http.ClientException(response.body);
 
@@ -31,7 +34,8 @@ class ApiMarvel {
 }
 
   ApiResponse responseToApiResponse(http.Response response) {
-    final responseMap = json.decode(utf8.decode(response.bodyBytes));
+    // final responseMap = json.decode(utf8.decode(response.bodyBytes));
+    final responseMap = json.decode(response.body);
     ApiResponse responseObject = ApiResponse.fromJson(responseMap);
     return responseObject;
   }
