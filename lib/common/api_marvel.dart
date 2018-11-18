@@ -1,12 +1,14 @@
 import 'dart:convert';
 
+import 'package:convert/convert.dart';
+import 'package:crypto/crypto.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:marvel_comics/common/utils/constants_utils.dart';
-import 'package:marvel_comics/common/utils/format_utils.dart';
+import 'package:marvel_comics/common/utils/secret_constants_utils.dart';
 
 class ApiMarvel {
-    static final ApiMarvel _instance = ApiMarvel._internal();
+  static final ApiMarvel _instance = ApiMarvel._internal();
 
   factory ApiMarvel() => _instance;
 
@@ -25,6 +27,13 @@ class ApiMarvel {
 
     return responseObj;
   }
+
+  String createHash(int ts){
+  var text = "$ts$marvelPrivateKey$marvelPublicKey";
+  var bytes = utf8.encode(text);
+  var digest = md5.convert(bytes);
+  return hex.encode(digest.bytes);
+}
 
   ApiResponse responseToApiResponse(http.Response response) {
     final responseMap = json.decode(utf8.decode(response.bodyBytes));

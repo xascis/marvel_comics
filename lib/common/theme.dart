@@ -24,7 +24,6 @@ ThemeData _buildAppTheme() {
     iconTheme: _customIconTheme(base.iconTheme),
     highlightColor: Colors.yellow[200],
     scaffoldBackgroundColor: Colors.white,
-    buttonColor: kAppColor4,
     buttonTheme: _buildButtonTheme(base.buttonTheme),
     textTheme: _buildTextTheme(base.textTheme),
 //    inputDecorationTheme: InputDecorationTheme(
