@@ -28,11 +28,19 @@ dependencies:
   # encriptar
   crypto: ^2.0.6
 
+  # json
+  json_annotation: ^2.0.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
+  # unit test
   test: ^1.5.1
+
+  # json
+  build_runner: ^1.1.2
+  json_serializable: ^2.0.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://www.dartlang.org/tools/pub/pubspec
