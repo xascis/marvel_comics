@@ -6,12 +6,6 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
   [GeneratedPluginRegistrant registerWithRegistry:self];
   // Override point for customization after application launch.
-  
-  // Muestra la splash screen
-  FlutterViewController *flutterViewController = (FlutterViewController*)self.window.rootViewController;
-  [flutterViewController loadDefaultSplashScreenView];
-  // fin splash screen
-  
   return [super application:application didFinishLaunchingWithOptions:launchOptions];
 }
 
