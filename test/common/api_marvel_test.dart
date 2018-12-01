@@ -28,7 +28,7 @@ void main(){
       return Response(json.encode(jsonResponse), 200);
     });
 
-    ApiResponse response = await apiMarvel.call(url: marvelCharactersUrl);
+    ApiResponse response = await apiMarvel(url: marvelCharactersUrl);
 
     expect(response.apiResponseData.results, isEmpty);
   });
@@ -40,6 +40,6 @@ void main(){
       return Response(json.encode({"code": 404}), 404);
     });
 
-    expect(() => apiMarvel.call(url:marvelCharactersUrl), throwsException);
+    expect(() => apiMarvel(url:marvelCharactersUrl), throwsException);
   });
 }

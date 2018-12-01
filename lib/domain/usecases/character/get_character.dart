@@ -3,13 +3,18 @@ import 'package:marvel_comics/common/utils/constants_utils.dart';
 import 'package:marvel_comics/domain/models/character.dart';
 
 class GetCharacter {
+
+  ApiMarvel apiMarvel = ApiMarvel();
   
   Future<List<Character>> call() async{
 
-    ApiResponse apiResponse = await ApiMarvel()(url: marvelCharactersUrl);
+    ApiResponse apiResponse = await apiMarvel.call(url: marvelCharactersUrl);
 
-    // convertir respose en listado de Character
+    List<Character> characterList = [];
+    for(var char in apiResponse.apiResponseData.results){
+      characterList.add(Character.fromJson(char));
+    }
 
-    return null;
+    return characterList;
   }
 }

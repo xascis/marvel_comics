@@ -21,23 +21,19 @@ Character _$CharacterFromJson(Map<String, dynamic> json) {
           ?.toList(),
       json['thumbnail'] == null
           ? null
-          : Thumbnail.fromJson(json['thumbnail'] as Map<String, dynamic>),
-      (json['comics'] as List)
-          ?.map((e) =>
-              e == null ? null : ComicList.fromJson(e as Map<String, dynamic>))
-          ?.toList(),
-      (json['stories'] as List)
-          ?.map((e) =>
-              e == null ? null : StoryList.fromJson(e as Map<String, dynamic>))
-          ?.toList(),
-      (json['events'] as List)
-          ?.map((e) =>
-              e == null ? null : EventList.fromJson(e as Map<String, dynamic>))
-          ?.toList(),
-      (json['series'] as List)
-          ?.map((e) =>
-              e == null ? null : SeriesList.fromJson(e as Map<String, dynamic>))
-          ?.toList());
+          : Image.fromJson(json['thumbnail'] as Map<String, dynamic>),
+      json['comics'] == null
+          ? null
+          : ComicList.fromJson(json['comics'] as Map<String, dynamic>),
+      json['stories'] == null
+          ? null
+          : StoryList.fromJson(json['stories'] as Map<String, dynamic>),
+      json['events'] == null
+          ? null
+          : EventList.fromJson(json['events'] as Map<String, dynamic>),
+      json['series'] == null
+          ? null
+          : SeriesList.fromJson(json['series'] as Map<String, dynamic>));
 }
 
 Map<String, dynamic> _$CharacterToJson(Character instance) => <String, dynamic>{

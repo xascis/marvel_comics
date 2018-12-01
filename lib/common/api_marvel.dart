@@ -12,9 +12,11 @@ class ApiMarvel {
 
   http.Client client = http.Client();
   
-  Future<ApiResponse> call({@required String url}) async{
+  Future<ApiResponse> call({@required String url, String name}) async{
     int ts = DateTime.now().millisecond;
     String path = "$marvelHost/$url?apikey=$marvelPublicKey&ts=$ts&hash=${createHash(ts)}&orderBy=name";
+
+    if(name != null) path = path + "&nameStartsWith=$name";
 
     final response = await this.client.get(path);
     client.close();

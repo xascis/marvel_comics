@@ -3,7 +3,7 @@ import 'package:marvel_comics/domain/models/comic_list.dart';
 import 'package:marvel_comics/domain/models/event_list.dart';
 import 'package:marvel_comics/domain/models/series_list.dart';
 import 'package:marvel_comics/domain/models/story_list.dart';
-import 'package:marvel_comics/domain/models/thumbnail.dart';
+import 'package:marvel_comics/domain/models/image.dart';
 import 'package:marvel_comics/domain/models/url.dart';
 
 part 'character.g.dart';
@@ -16,11 +16,11 @@ class Character{
   final DateTime modified;
   final String resourceURI;
   final List<Url> urls;
-  final Thumbnail thumbnail;
-  final List<ComicList> comics;
-  final List<StoryList> stories;
-  final List<EventList> events;
-  final List<SeriesList> series;
+  final Image thumbnail;
+  final ComicList comics;
+  final StoryList stories;
+  final EventList events;
+  final SeriesList series;
 
   Character(this.id, this.name, this.description, this.modified, this.resourceURI, this.urls, this.thumbnail, this.comics, this.stories, this.events, this.series);
 
