@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:marvel_comics/bloc/bloc_provider.dart';
+import 'package:marvel_comics/bloc/character_bloc.dart';
 
 class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final bloc = BlocProvider.of<CharacterBloc>(context);
+    
     return Scaffold(
       appBar: AppBar(
         title: Text("Marvel Comics"),
