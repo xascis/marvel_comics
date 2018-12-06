@@ -6,6 +6,10 @@ import 'package:rxdart/rxdart.dart';
 class CharacterBloc implements BlocBase {
   final _character = PublishSubject<List<Character>> ();
 
+  CharacterBloc() {
+    this.getCharacterList();
+  }
+
   Observable<List<Character>> get characterList => _character.stream;
 
   getCharacterList() async {

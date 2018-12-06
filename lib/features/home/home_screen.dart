@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:marvel_comics/bloc/bloc_provider.dart';
 import 'package:marvel_comics/bloc/character_bloc.dart';
+import 'package:marvel_comics/domain/models/character.dart';
 
 class HomeScreen extends StatelessWidget {
   @override
@@ -12,7 +13,7 @@ class HomeScreen extends StatelessWidget {
       body: Column(
         children: <Widget>[
           buildSearchBar(),
-          buildCharacterList(),
+          buildCharacterList(bloc),
           buildAttributeText(),
         ],
       ),
@@ -42,17 +43,24 @@ class HomeScreen extends StatelessWidget {
       ),
     );
   }
-  Expanded buildCharacterList() {
+  Expanded buildCharacterList(CharacterBloc bloc) {
     return Expanded(
-      child: ListView.builder(
-        itemCount: 10,
-        itemBuilder: (BuildContext context, int index) {
-          return buildCharacterTile();
+      child: StreamBuilder(
+        initialData: [],
+        stream: bloc.characterList, 
+        builder: (BuildContext context, AsyncSnapshot<List> asyncSnapshot) {
+          return ListView.builder(
+            itemCount: asyncSnapshot.data.length,
+            itemBuilder: (BuildContext context, int index) {
+              Character character = asyncSnapshot.data[index];
+              return buildCharacterTile(character);
+            }
+          );
         }
       ),
     );
   }
-  Column buildCharacterTile() {
+  Column buildCharacterTile(Character character) {
     return Column(
       children: <Widget>[
         Container(
@@ -61,12 +69,12 @@ class HomeScreen extends StatelessWidget {
             onTap: () {},
             leading: Icon(Icons.ac_unit),
             title: Text(
-              "Hero name",
+              "${character.name}",
               style: TextStyle(fontSize: 20.0),
               maxLines: 1,
             ),
             subtitle: Text(
-              "Hero description",
+              "${character.description}",
               style: TextStyle(fontSize: 15.0),
               maxLines: 3,
             ),
