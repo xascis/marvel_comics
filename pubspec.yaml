@@ -20,6 +20,10 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^0.1.0
 
+  # translations
+  flutter_localizations:
+    sdk: flutter
+
   # peticiones
   http: ^0.12.0
 

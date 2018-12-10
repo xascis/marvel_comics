@@ -14,6 +14,7 @@ ThemeData _buildAppTheme() {
   final ThemeData base = new ThemeData(fontFamily: 'Roboto');
 
   return base.copyWith(
+    platform: TargetPlatform.android,
     brightness: Brightness.light,
     accentColor: kAppColor1,
     primaryColor: kAppColor2,
