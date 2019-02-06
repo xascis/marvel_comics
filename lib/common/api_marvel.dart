@@ -28,12 +28,12 @@ class ApiMarvel {
     return responseObj;
   }
 
-  String createHash(int ts){
-  var text = "$ts$marvelPrivateKey$marvelPublicKey";
-  var bytes = utf8.encode(text);
-  var digest = md5.convert(bytes);
-  return hex.encode(digest.bytes);
-}
+  String createHash(int ts) {
+    var text = "$ts$marvelPrivateKey$marvelPublicKey";
+    var bytes = utf8.encode(text);
+    var digest = md5.convert(bytes);
+    return hex.encode(digest.bytes);
+  }
 
   ApiResponse responseToApiResponse(http.Response response) {
     // final responseMap = json.decode(utf8.decode(response.bodyBytes));
