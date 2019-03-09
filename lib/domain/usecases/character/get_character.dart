@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:marvel_comics/common/api_marvel.dart';
 import 'package:marvel_comics/common/utils/constants_utils.dart';
 import 'package:marvel_comics/domain/models/character.dart';
