@@ -1,5 +1,5 @@
+import 'package:bloc_provider/bloc_provider.dart';
 import 'package:flutter/material.dart';
-import 'package:marvel_comics/bloc/bloc_provider.dart';
 import 'package:marvel_comics/bloc/character_bloc.dart';
 import 'package:marvel_comics/domain/models/character.dart';
 

@@ -1,6 +1,6 @@
+import 'package:bloc_provider/bloc_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:marvel_comics/bloc/bloc_provider.dart';
 import 'package:marvel_comics/bloc/character_bloc.dart';
 import 'package:marvel_comics/common/theme.dart';
 import 'package:marvel_comics/features/home/home_screen.dart';
@@ -24,7 +24,7 @@ class MarvelApp extends StatelessWidget {
         const Locale('en', 'EN'),
       ],
       home: BlocProvider(
-        bloc: CharacterBloc(),
+        creator: (BuildContext context, BlocCreatorBag bag) => CharacterBloc(),
         child: HomeScreen()
       ),
     );

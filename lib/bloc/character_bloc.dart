@@ -1,9 +1,9 @@
-import 'package:marvel_comics/bloc/bloc_base.dart';
+import 'package:bloc_provider/bloc_provider.dart';
 import 'package:marvel_comics/domain/models/character.dart';
 import 'package:marvel_comics/domain/usecases/character/get_character.dart';
 import 'package:rxdart/rxdart.dart';
 
-class CharacterBloc implements BlocBase {
+class CharacterBloc implements Bloc {
   final _character = PublishSubject<List<Character>> ();
 
   CharacterBloc() {
@@ -17,8 +17,8 @@ class CharacterBloc implements BlocBase {
     _character.sink.add(list);
   }
 
-  void dispose(){
-    _character.close();
+  void dispose() async {
+    await _character.close();
   }
 
 }
