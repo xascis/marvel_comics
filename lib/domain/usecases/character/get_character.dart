@@ -8,14 +8,12 @@ class GetCharacter {
 
   ApiMarvel apiMarvel = ApiMarvel();
   
-  Future<List<Character>> call() async{
+  Future<List<Character>> call({String name}) async{
 
-    ApiResponse apiResponse = await apiMarvel.call(url: marvelCharactersUrl);
+    ApiResponse apiResponse = await apiMarvel.call(url: marvelCharactersUrl, name: name);
 
     List<Character> characterList = [];
-    for(var char in apiResponse.apiResponseData.results){
-      characterList.add(Character.fromJson(char));
-    }
+    for(var char in apiResponse.apiResponseData.results) characterList.add(Character.fromJson(char));
 
     return characterList;
   }

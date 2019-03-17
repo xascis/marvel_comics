@@ -12,7 +12,7 @@ class HomeScreen extends StatelessWidget {
       appBar: buildAppBar(),
       body: Column(
         children: <Widget>[
-          buildSearchBar(),
+          buildSearchBar(bloc),
           buildCharacterList(bloc),
           buildAttributeText(),
         ],
@@ -25,7 +25,7 @@ class HomeScreen extends StatelessWidget {
       title: Text("Marvel Comics"),
     );
   }
-  Container buildSearchBar() {
+  Container buildSearchBar(CharacterBloc bloc) {
     return Container(
       margin: EdgeInsets.all(10.0),
       child: TextField(
@@ -37,9 +37,9 @@ class HomeScreen extends StatelessWidget {
             fontWeight: FontWeight.bold,
             fontSize: 20.0,
           ),
-          filled: true,
+          filled: false,
         ),
-        onChanged: (text) {print(text);},
+        onChanged: bloc.searchName,
       ),
     );
   }
@@ -48,7 +48,7 @@ class HomeScreen extends StatelessWidget {
       child: StreamBuilder(
         initialData: [],
         stream: bloc.characterList, 
-        builder: (BuildContext context, AsyncSnapshot<List> asyncSnapshot) {
+        builder: (BuildContext context, AsyncSnapshot<List> asyncSnapshot) { 
           return ListView.builder(
             itemCount: asyncSnapshot.data.length,
             itemBuilder: (BuildContext context, int index) {

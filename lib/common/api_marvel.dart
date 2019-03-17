@@ -15,7 +15,7 @@ class ApiMarvel {
   
   Future<ApiResponse> call({@required String url, String name}) async{
     int ts = DateTime.now().millisecond;
-    String path = "$marvelHost/$url?apikey=$marvelPublicKey&ts=$ts&hash=${createHash(ts)}&orderBy=name";
+    String path = "$marvelHost/$url?apikey=$marvelPublicKey&ts=$ts&hash=${createHash(ts)}&orderBy=name&limit=100";
 
     if(name != null) path = path + "&nameStartsWith=$name";
 
