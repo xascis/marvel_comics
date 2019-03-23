@@ -1,166 +1,78 @@
 import 'package:flutter/material.dart';
+import 'package:marvel_comics/common/theme.dart';
+import 'package:marvel_comics/domain/models/character.dart';
 
 class DetailScreen extends StatelessWidget {
+  final Character character;
+  
+  DetailScreen(this.character);
+
+  static void open(BuildContext context, {@required Character character}) {
+    Navigator.push(
+      context, 
+      MaterialPageRoute(builder: (BuildContext context) => DetailScreen(character))
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Charater name"),
-      ),
-      body: Container(
-        padding: EdgeInsets.all(5.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: <Widget>[
-            Container(
-              padding: const EdgeInsets.all(5.0),
-              child: Row(
-                children: <Widget>[
-                  Column(
-                    children: <Widget>[
-                      Icon(Icons.ac_unit),
-                    ],
-                  ),
-                  Expanded(
-                    child: Container(
-                      padding: const EdgeInsets.only(left: 5.0, right: 5.0),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Container(
-                            padding: const EdgeInsets.only(bottom: 5.0),
-                            child: Text(
-                              "Character name", 
-                              style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold), 
-                              maxLines: 2,
-                            ),
-                          ),
-                          Text (
-                            "Character description",
-                            style: TextStyle(fontSize: 15.0),
-                            maxLines: 3,
-                          ),
-                        ],
-                      ),
-                    ),
-                  )
-                ],
-              ),
-            ),
-            Row(
+      backgroundColor: Colors.black,
+      body: Column(
+        children: <Widget>[
+          Container(
+            height: MediaQuery.of(context).size.height * 0.6,
+            child: Stack(
               children: <Widget>[
-                Container(
-                  padding: EdgeInsets.all(5.0),
-                  child: Text(
-                    'Links',
-                    style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
-                  ),
-                )
-              ],
-            ),
-            Container(
-              padding: EdgeInsets.all(5.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
-                  RaisedButton(
-                    onPressed: () {},
-                    child: Text(
-                      'Detalles', 
-                      style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                  RaisedButton(
-                    onPressed: null,
-                    child: Text(
-                      'Wiki', 
-                      style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                  RaisedButton(
-                    onPressed: null,
-                    child: Text(
-                      'Comics', 
-                      style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
-                    ),
-                  )
-                ],
-              ),
-            ),
-            Row(
-              children: <Widget>[
-                Container(
-                  padding: EdgeInsets.all(5.0),
-                  child: Text(
-                    'Recursos',
-                    style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
-                  ),
-                )
-              ],
-            ),
-            Expanded(
-              child: Container(
-                padding: EdgeInsets.all(5.0),
-                child: DefaultTabController(
-                  length: 2,
-                  child: Column(
-                    children: <Widget>[
-                      TabBar(
-                        labelColor: Colors.red[900],
-                        labelStyle: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
-                        tabs: [
-                          Tab(text: '2 Comics'),
-                          Tab(text: '3 Eventos'),
-                        ]
-                      ),
-                      Expanded(
-                        child: TabBarView(
-                          children: [
-                            buildTabBarView(),
-                            buildTabBarView(),
-                          ]
-                        ),
-                      ),
-                    ],
-                  )
+                Image(
+                  image: NetworkImage("${character.thumbnail.path}.${character.thumbnail.extension}"),
+                  width: MediaQuery.of(context).size.width,
+                  fit: BoxFit.fitWidth,
                 ),
-              )
+                Positioned(
+                  left: 1.0,
+                  top: 1.0,
+                  child: SafeArea(
+                    child: IconButton(
+                      icon: Icon(Icons.arrow_back),
+                      color: Colors.grey[300],
+                      onPressed: () => Navigator.of(context).pop(),
+                    ),
+                  ),
+                ),
+                Positioned(
+                  bottom: 1.0,
+                  right: 1.0,
+                  child: Container(
+                    padding: EdgeInsets.symmetric(vertical: 5.0, horizontal: 5.0),
+                    child: Text(
+                      "${character.name}", 
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: bigText.copyWith(
+                        fontWeight: FontWeight.bold, 
+                        color: Colors.grey[100], 
+                        shadows: [Shadow(offset: Offset.fromDirection(0.0, 2.0)), Shadow(offset: Offset.fromDirection(1.0, 2.0))]
+                      ), 
+                    ),
+                  ),
+                ),
+              ],
             ),
-          ],
-        ),
+          ),
+          Expanded(
+            child: SingleChildScrollView(
+              child: SafeArea(
+                child: Container(
+                  padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 20.0),
+                  child: Text("${character.description}", style: regularText.copyWith(color: Colors.white),),
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
 
-  ListView buildTabBarView() {
-    return ListView.builder(
-      itemCount: 10,
-      itemBuilder: (BuildContext context, int index) {
-        return Column(
-          children: <Widget>[
-            Container(
-              padding: EdgeInsets.all(5.0),
-              child: ListTile(
-                onTap: null,
-                leading: Icon(Icons.ac_unit),
-                title: Text(
-                  "Title",
-                  style: TextStyle(fontSize: 20.0,),
-                  maxLines: 1,
-                ),
-                subtitle: Text(
-                  "Comic description",
-                  style: TextStyle(fontSize: 15.0),
-                  maxLines: 3,
-                ),
-              ),
-            ),
-            Divider(height: 2.0,),
-          ],
-        );
-      }
-    );
-  }
 }

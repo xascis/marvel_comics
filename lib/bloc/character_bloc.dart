@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:bloc_provider/bloc_provider.dart';
+import 'package:flutter/material.dart';
 import 'package:marvel_comics/domain/models/character.dart';
 import 'package:marvel_comics/domain/usecases/character/get_character.dart';
 import 'package:rxdart/rxdart.dart';
@@ -16,9 +17,10 @@ class CharacterBloc implements Bloc {
 
   Future<void> _getCharacterList(String text) async => _character.sink.add(await GetCharacter()(name: text));
 
-  CharacterBloc() {
+  CharacterBloc(BuildContext context) {
     _searchText.debounce(Duration(seconds: 3)).listen((text) {
       _getCharacterList(text);
+      FocusScope.of(context).requestFocus(FocusNode());
     });
   }
 

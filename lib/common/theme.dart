@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 
-final kAppColor1 = Colors.redAccent; // red
-final kAppColor2 = Colors.red[800]; // dark red
-final kAppColor3 = Colors.blueAccent; // azul claro
-final kAppColor4 = Colors.blue[800]; // azul oscuro
-final kAppColor5 = Colors.blueGrey[800]; // gris oscuro
-final kAppColor6 = Colors.blueGrey; // gris medio
-final kAppColor7 = Colors.blueGrey[100]; // gris claro
+final colorRed = Colors.redAccent; // red
+final colorDarkRed = Colors.red[800]; // dark red
+final colorBlue = Colors.blueAccent; // azul claro
+final colorDarkBlue = Colors.blue[800]; // azul oscuro
+final colorLightBlueGrey = Colors.blueGrey[100]; // gris claro
+final colorBlueGrey = Colors.blueGrey; // gris medio
+final colorDarkBlueGrey = Colors.blueGrey[800]; // gris oscuro
 
-final ThemeData kAppTheme = _buildAppTheme();
+final ThemeData themeData = _buildAppTheme();
 
 ThemeData _buildAppTheme() {
   final ThemeData base = new ThemeData(fontFamily: 'Roboto');
@@ -16,53 +16,52 @@ ThemeData _buildAppTheme() {
   return base.copyWith(
     platform: TargetPlatform.android,
     brightness: Brightness.light,
-    accentColor: kAppColor1,
-    primaryColor: kAppColor2,
+    accentColor: colorRed,
+    primaryColor: colorDarkRed,
     primaryColorDark: Colors.yellow,
     cardColor: Colors.white,
-    // indicatorColor: kAppColor1,
-    hintColor: kAppColor6,
+    hintColor: colorBlueGrey,
     iconTheme: _customIconTheme(base.iconTheme),
-    highlightColor: Colors.yellow[200],
+    highlightColor: Colors.yellow,
     scaffoldBackgroundColor: Colors.white,
     buttonTheme: _buildButtonTheme(base.buttonTheme),
     textTheme: _buildTextTheme(base.textTheme),
-//    inputDecorationTheme: InputDecorationTheme(
-//      filled: true,
-//      fillColor: kAppColor2,
-//      hintStyle: TextStyle(color: kAppColor4),
-//      border: OutlineInputBorder(
-//        borderRadius: BorderRadius.circular(8.0),
-//        borderSide: BorderSide.none,
-//      ),
-//      labelStyle: TextStyle(
-//        color: kAppColor6,
-//      )
-//    ),
+    inputDecorationTheme: InputDecorationTheme(
+      contentPadding: EdgeInsets.symmetric(vertical: 12.0, horizontal: 15.0),
+      filled: false,
+      hintStyle: TextStyle(fontSize: 16.0, fontWeight: FontWeight.w400),
+      border: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(8.0),
+        // borderSide: BorderSide.none,
+      ),
+    ),
   );
 }
 
 ButtonThemeData _buildButtonTheme(ButtonThemeData base) {
   return base.copyWith(
-    buttonColor: kAppColor4,
+    buttonColor: colorDarkBlue,
+    padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.all(Radius.circular(8.0)),
+    ),
   );
 }
 TextTheme _buildTextTheme(TextTheme base) {
   return base.copyWith(
     subhead: base.subhead.copyWith(
       fontWeight: FontWeight.w400,
-      fontSize: 15.0,
-      color: kAppColor5
+      fontSize: 14.0,
+      color: colorDarkBlueGrey
     ),
     body1: base.body1.copyWith(
       fontWeight: FontWeight.w400,
-      fontSize: 15.0,
-      color: kAppColor5
+      fontSize: 16.0,
+      color: colorDarkBlueGrey
     ),
     button: base.button.copyWith(
       fontWeight: FontWeight.w500,
-      fontSize: 15.0,
-      color: Colors.white,
+      fontSize: 16.0,
     ),
     // others
     body2: base.body2.copyWith(
@@ -92,5 +91,11 @@ TextTheme _buildTextTheme(TextTheme base) {
   );
 }
 IconThemeData _customIconTheme(IconThemeData original) {
-  return original.copyWith(color: kAppColor3);
+  return original.copyWith(color: colorBlue);
 }
+
+TextStyle smallText = TextStyle(fontSize: 14.0, fontWeight: FontWeight.w400);
+TextStyle regularText = TextStyle(fontSize: 16.0, fontWeight: FontWeight.w400);
+TextStyle bigText = TextStyle(fontSize: 18.0, fontWeight: FontWeight.w400);
+TextStyle biggerText = TextStyle(fontSize: 22.0, fontWeight: FontWeight.w400);
+TextStyle biggestText = TextStyle(fontSize: 28.0, fontWeight: FontWeight.w400);
