@@ -12,9 +12,6 @@ class GetCharacter {
 
     ApiResponse apiResponse = await apiMarvel.call(url: marvelCharactersUrl, name: name);
 
-    List<Character> characterList = [];
-    for(var char in apiResponse.apiResponseData.results) characterList.add(Character.fromJson(char));
-
-    return characterList;
+    return apiResponse.apiResponseData.results.map<Character>((char) => Character.fromJson(char)).toList();
   }
 }
