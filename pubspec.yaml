@@ -10,7 +10,7 @@ description: An API Marvel project.
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.0.0-dev.68.0 <3.0.0"
+  sdk: ">=2.1.0 <3.0.0"
 
 dependencies:
   flutter:
@@ -18,14 +18,14 @@ dependencies:
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
-  cupertino_icons: ^0.1.0
+  cupertino_icons: ^0.1.2
 
   # translations
   flutter_localizations:
     sdk: flutter
 
   # peticiones
-  http: ^0.12.0
+  http: ^0.12.0+2
 
   # navegador web
   # url_launcher: ^3.0.1
@@ -34,7 +34,7 @@ dependencies:
   crypto: ^2.0.6
 
   # json
-  json_annotation: ^2.0.0
+  json_annotation: ^2.4.0
 
   # bloc pattern
   bloc_provider: ^0.5.0+3
@@ -48,8 +48,8 @@ dev_dependencies:
   test: ^1.5.1
 
   # json
-  build_runner: ^1.1.2
-  json_serializable: ^2.0.0
+  build_runner: ^1.5.0
+  json_serializable: ^3.0.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://www.dartlang.org/tools/pub/pubspec
