@@ -44,13 +44,29 @@ class HomeScreen extends StatelessWidget {
   Expanded buildCharacterList(CharacterBloc bloc) {
     return Expanded(
       child: StreamBuilder(
-        initialData: [],
+        initialData: CharacterState.initial(),
         stream: bloc.characterList, 
-        builder: (BuildContext context, AsyncSnapshot<List> asyncSnapshot) { 
+        builder: (BuildContext context, AsyncSnapshot<CharacterState> snapList) {
+          if (snapList.hasError) {
+            return Center(
+              child: Container(
+                margin: const EdgeInsets.symmetric(horizontal: 20.0),
+                padding: const EdgeInsets.symmetric(vertical: 15.0, horizontal: 15.0),
+                decoration: ShapeDecoration(
+                  color: Colors.grey[100],
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(8.0))
+                  )
+                ),
+                child: Text("${snapList.error}")
+              ),
+            );
+          }
+          if (snapList.data.isLoading) return Center(child: CircularProgressIndicator(),);
           return ListView.builder(
-            itemCount: asyncSnapshot.data.length,
+            itemCount: snapList.data.characterList.length,
             itemBuilder: (BuildContext context, int index) {
-              Character character = asyncSnapshot.data[index];
+              Character character = snapList.data.characterList[index];
               return buildCharacterTile(context, character: character);
             }
           );
@@ -106,4 +122,5 @@ class HomeScreen extends StatelessWidget {
       ),
     );
   }
+
 }
