@@ -17,7 +17,7 @@
         android:name="io.flutter.app.FlutterApplication"
         android:label="Marvel"
         android:icon="@mipmap/ic_launcher"
-        tools:ignore="GoogleAppIndexingWarning">
+        tools:ignore="AllowBackup,GoogleAppIndexingWarning">
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"
